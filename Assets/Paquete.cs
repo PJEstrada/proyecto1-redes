@@ -7,7 +7,7 @@ public class Paquete : MonoBehaviour {
 
 
 	/*
-		El identificador del paquete. Aqui ira la accion que se esta enviando en el juego :D
+		El identificador del paquete. Aqui ira la accion que se esta enviando en el juego 
 	 */
 	public enum Identificador
 	{
