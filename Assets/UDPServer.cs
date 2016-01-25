@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Net.Sockets;
-public class UDPServer : MonoBehaviour {
+public class UDPServer {
 
 
 	
@@ -19,25 +19,15 @@ public class UDPServer : MonoBehaviour {
 	
 	// Listado de clientes
 	ArrayList listaClientes;
-	
 	// Server socket
 	Socket serverSocket;
-	
 	// Stream de datos
-	byte[] data = new byte[1024];
-	
+	byte[] dataStream = new byte[1024];
 	// Status delegate
 	delegate void UpdateStatusDelegate(string status);
 		UpdateStatusDelegate updateStatusDelegate = null;
-	
 
 	public UDPServer()
-	{
-		//Constructor....
-	}
-	
-
-	private void Server_Load(object sender, EventArgs e)
 	{
 		try
 		{
@@ -62,15 +52,19 @@ public class UDPServer : MonoBehaviour {
 			// Inicializar Endpoint de clientes
 			EndPoint epSender = (EndPoint)clients;
 			
-			// Empezar a escuhar datos entrantos
-			serverSocket.BeginReceiveFrom(this.data, 0, this.data.Length, SocketFlags.None, ref epSender, new AsyncCallback(ReceiveData), epSender);
-	
+			// Empezar a escuhar datos entrantes
+			serverSocket.BeginReceiveFrom(this.dataStream, 0, this.dataStream.Length, SocketFlags.None, ref epSender, new AsyncCallback(ReceiveData), epSender);
+			
+			GameController.controller.messages.enabled = true;
 		}
 		catch (Exception ex)
 		{
 			Debug.Log("Error al cargar servidor: " + ex.Message+ " ---UDP ");
 		}
 	}
+
+
+
 	
 
 	public void enviarData(IAsyncResult asyncResult)
@@ -90,76 +84,38 @@ public class UDPServer : MonoBehaviour {
 	{
 		try
 		{
-			byte[] dataR;
-			
-			// Initialise a packet object to store the received data
-			Paquete receivedData = new Paquete(this.data);
-			
-			// Initialise a packet object to store the data to be sent
-			Paquete sendData = new Paquete();
-			
+			byte[] data	;
+			// Paquete para almacenar la data recibida
+			Paquete receivedData = new Paquete(GetString(this.dataStream));
 			// Initialise the IPEndPoint for the clients
 			IPEndPoint clients = new IPEndPoint(IPAddress.Any, 0);
-			
 			// Initialise the EndPoint for the clients
 			EndPoint epSender = (EndPoint)clients;
-			
 			// Receive all data
 			serverSocket.EndReceiveFrom(asyncResult, ref epSender);
-			
-			// Start populating the packet to be sent
-			sendData.identificadorPaquete = receivedData.identificadorPaquete;
-			
-			switch (receivedData.identificadorPaquete)
-			{
-			case Paquete.Identificador.moverIzquierda:
-				//bla bla
-				break;
-				
-			case Paquete.Identificador.moverDerecha:
-				// bla bla
-
-				break;
-				
-			case Paquete.Identificador.moverArriba:
-				// bla bla
-
-				break;
-			case Paquete.Identificador.moverAbajo:
-				// bla bla
-				
-				break;
-
-			case Paquete.Identificador.disparar:
-				// bla bla
-				
-				break;
-
-			case Paquete.Identificador.avanzar:
-				// bla bla
-				
-				break;
-
-			}
-			
-			// Get packet as byte array
-			dataR = sendData.GetDataStream();
 
 
-			/*Se envia el pacquete a todos los clientes*/
+			// Actualizamos el mundo del server...Pendiente
+
+
+			// Empezamos a crear el paquete a ser enviado
+			Paquete sendData = new Paquete();
+			// Obtenemos los bytes del paquete
+			data = GetBytes(sendData.GetDataStream());
+			/*Se envia el paquete a todos los clientes*/
 			foreach (Cliente client in this.listaClientes)
 			{
 				if (client.endPoint != epSender)
 				{
-					// Broadcast to all logged on users
-					serverSocket.BeginSendTo(dataR, 0, dataR.Length, SocketFlags.None, client.endPoint, new AsyncCallback(this.enviarData), client.endPoint);
+					// Enviar a todos los clientes
+					serverSocket.BeginSendTo(data, 0, data.Length, SocketFlags.None, client.endPoint, new AsyncCallback(this.enviarData), client.endPoint);
 				}
 			}
 			
-			// Listen for more connections again...
-			serverSocket.BeginReceiveFrom(this.data, 0, this.data.Length, SocketFlags.None, ref epSender, new AsyncCallback(this.ReceiveData), epSender);
-			
-			// Update status through a delegate
+			// Volvemos a escuchar conexiones nuevamente...
+			serverSocket.BeginReceiveFrom(this.dataStream, 0, this.dataStream.Length, SocketFlags.None, ref epSender, new AsyncCallback(this.ReceiveData), epSender);
+
+			// Actualizamos el estado con un delegate
 			//this.Invoke(this.updateStatusDelegate, new object[] { sendData.ChatMessage });
 		}
 		catch (Exception ex)
@@ -167,26 +123,37 @@ public class UDPServer : MonoBehaviour {
 			Debug.Log("ReceiveData Error: " + ex.Message+ "UDP Server");
 		}
 	}
-	
 
 
+	// Metodo utilizado para procesar los paquetes que recibe el servidor y realizar las acciones adecuadas en cada caso.
+	public void procesarPaquete(){
+
+
+
+	}
 
 	private void UpdateStatus(string status)
 	{
 		Debug.Log( status + Environment.NewLine);
 	}
 
+
+
 	/*-------------------------------------FIN AREA SERVER------------------------------------------------------*/
-	
-	// Use this for initialization
-	void Start () {
-		
-		
-		
-	}	
-	// Update is called once per frame
-	void Update () {
-		
+	// Helper Methods
+	static byte[] GetBytes(string str)
+	{
+		byte[] bytes = new byte[str.Length * sizeof(char)];
+		System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+		return bytes;
 	}
+	
+	static string GetString(byte[] bytes)
+	{
+		char[] chars = new char[bytes.Length / sizeof(char)];
+		System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
+		return new string(chars);
+	}
+
 }
 
