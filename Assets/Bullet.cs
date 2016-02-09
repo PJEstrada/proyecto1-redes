@@ -4,7 +4,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 
-public class Bullet  {
+public class BulletMessage  {
 
 	[XmlAttribute("id")]
 	public int id;
@@ -21,7 +21,7 @@ public class Bullet  {
 	[XmlAttribute("rz")]
 	public float rz;
 
-	public Bullet(){
+	public BulletMessage(){
 		this.px = 0;
 		this.id = -1;
 		this.py = 0;
@@ -30,7 +30,7 @@ public class Bullet  {
 		this.ry = 0;
 		this.rz = 0;	
 	}
-	public Bullet(int id,float px,float py, float pz,float rx,float ry,float rz){
+	public BulletMessage(int id,float px,float py, float pz,float rx,float ry,float rz){
 		this.id = id;
 		this.px = px;
 		this.py = py;
