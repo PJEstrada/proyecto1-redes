@@ -20,13 +20,14 @@ public class Paquete {
 		avanzar,
 		disparar,
 		conectar,
+		accesoAutorizado,
 		Null
 	}
 	public Identificador identificadorPaquete;
 	public int jugador; 
 
 	[XmlArray("B"),XmlArrayItem("Bullet")]
-	public List<Bullet> bullets = new List<Bullet> ();
+	public List<BulletMessage> bullets = new List<BulletMessage> ();
 
 
 
@@ -38,7 +39,7 @@ public class Paquete {
 	{
 		this.identificadorPaquete = Identificador.Null;
 		this.jugador = -1;
-	    this.bullets = new List<Bullet> ();
+		this.bullets = new List<BulletMessage> ();
 	}
 	
 	
