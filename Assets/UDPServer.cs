@@ -25,7 +25,7 @@ public class UDPServer {
 	byte[] dataStream = new byte[1024];
 	// Status delegate
 	delegate void UpdateStatusDelegate(string status);
-		UpdateStatusDelegate updateStatusDelegate = null;
+		//UpdateStatusDelegate updateStatusDelegate = null;
 
 	public UDPServer()
 	{
@@ -35,7 +35,7 @@ public class UDPServer {
 			this.listaClientes = new ArrayList();
 			
 			// Inicializando el delegado para actualizar estado
-			this.updateStatusDelegate = new UpdateStatusDelegate(this.UpdateStatus);
+			//this.updateStatusDelegate = new UpdateStatusDelegate(this.UpdateStatus);
 			
 			// Inicializando el socket
 			serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -96,25 +96,29 @@ public class UDPServer {
 
 
 			// Actualizamos el mundo del server...Pendiente
+			if(receivedData.identificadorPaquete == Paquete.Identificador.conectar){
+				// Empezamos a crear el paquete a ser enviado
+				Paquete sendData = new Paquete();
+				sendData.identificadorPaquete = Paquete.Identificador.accesoAutorizado;
+				GameController.controller.connected = true;
 
-
-			// Empezamos a crear el paquete a ser enviado
-			Paquete sendData = new Paquete();
-			// Obtenemos los bytes del paquete
-			data = GetBytes(sendData.GetDataStream());
-			/*Se envia el paquete a todos los clientes*/
-			foreach (Cliente client in this.listaClientes)
-			{
-				if (client.endPoint != epSender)
+				// Obtenemos los bytes del paquete
+				data = GetBytes(sendData.GetDataStream());
+				/*Se envia el paquete a todos los clientes*/
+				foreach (Cliente client in this.listaClientes)
 				{
-					// Enviar a todos los clientes
-					serverSocket.BeginSendTo(data, 0, data.Length, SocketFlags.None, client.endPoint, new AsyncCallback(this.enviarData), client.endPoint);
+					if (client.endPoint != epSender)
+					{
+						// Enviar a todos los clientes
+						serverSocket.BeginSendTo(data, 0, data.Length, SocketFlags.None, client.endPoint, new AsyncCallback(this.enviarData), client.endPoint);
+					}
 				}
+
 			}
+
 			
 			// Volvemos a escuchar conexiones nuevamente...
 			serverSocket.BeginReceiveFrom(this.dataStream, 0, this.dataStream.Length, SocketFlags.None, ref epSender, new AsyncCallback(this.ReceiveData), epSender);
-
 			// Actualizamos el estado con un delegate
 			//this.Invoke(this.updateStatusDelegate, new object[] { sendData.ChatMessage });
 		}

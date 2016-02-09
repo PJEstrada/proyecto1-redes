@@ -3,57 +3,89 @@ using System.Collections;
 
 public class Ship : MonoBehaviour {
 
-
-	public GameObject shipSprite1;
-	public GameObject shipSprite2;
-	public float timeBetweenSpawn=0.05f;
 	public string facing;
-
-
+	public float timeBetweenMove;
+	public float speed;
+	public GameObject bullet;
+	public int player;
 	// Use this for initialization
 	void Start () {
-		facing = "front";
-		Invoke("MoveShip",timeBetweenSpawn);
+
+	}
+	public void startMoving(){
+		
+		Invoke("MoveShip",timeBetweenMove);
 	}
 	// Update is called once per frame
 	void Update () {
-
-		if (Input.GetKeyDown ("left")) {
-			rotateLeft ();
+		if (GameController.controller.gameOn==true) {
+			if (Input.GetKeyDown ("left")) {
+				rotateLeft ();
+				
+			} else if (Input.GetKeyDown ("down")) {
+				rotateDown ();
+			} else if (Input.GetKeyDown ("up")) {
+				rotateFront ();
+			} else if (Input.GetKeyDown ("right")) {
+				rotateRight ();
+			} else if (Input.GetKeyDown ("z")) {
+				fire ();
+			}		
 		
-		} else if (Input.GetKeyDown ("down")) {
-			rotateDown();
-		}			
-		else if (Input.GetKeyDown ("up")) {
-			rotateFront();
-		}			
-		else if (Input.GetKeyDown ("right")) {
-			rotateRight();
-		}			
+		
+		}
+
 
 
 	}
 	void MoveShip(){
-		if (facing.Equals("front")) {
-			transform.Translate (0, 5, 0);
-		} else if (facing.Equals("right")) {
-			transform.Translate (0, 5, 0);
-		} else if (facing.Equals("left")) {
-			transform.Translate (0, 5, 0);
-		} else if (facing.Equals("down")) {
-			transform.Translate (0, 5,0);
+		if (GameController.controller.gameOn==true) {
+			if (facing.Equals("front")) {
+				Vector3 v1 = rigidbody2D.velocity;
+				v1.x = 0;
+				rigidbody2D.velocity = v1;
+				Vector3 v = rigidbody2D.velocity;
+				v.y = speed;
+				rigidbody2D.velocity = v;
+			} else if (facing.Equals("right")) {
+				Vector3 v1 = rigidbody2D.velocity;
+				v1.y = 0;
+				rigidbody2D.velocity = v1;
+				Vector3 v = rigidbody2D.velocity;
+				v.x = speed;
+				rigidbody2D.velocity = v;
+			} else if (facing.Equals("left")) {
+				Vector3 v1 = rigidbody2D.velocity;
+				v1.y = 0;
+				rigidbody2D.velocity = v1;
+				Vector3 v = rigidbody2D.velocity;
+				v.x = -speed;
+				rigidbody2D.velocity = v;
+			} else if (facing.Equals("down")) {
+				Vector3 v1 = rigidbody2D.velocity;
+				v1.x = 0;
+				rigidbody2D.velocity = v1;
+				Vector3 v = rigidbody2D.velocity;
+				v.y = -speed;
+				rigidbody2D.velocity = v;
+			}
+			
+			Invoke("MoveShip",GameController.controller.timeBetweenSpawn);		
+		
+		
 		}
 
-		Invoke("MoveShip",timeBetweenSpawn);
 	}
 
 	void rotateLeft(){
 	
 		if (!facing.Equals("right") && !facing.Equals("left")) {
 			if(facing.Equals("front")){
+			
 				transform.Rotate (0,0,90);
 			}
 			else{
+
 				transform.Rotate (0,0,-90);
 			}
 			facing = "left";
@@ -64,9 +96,11 @@ public class Ship : MonoBehaviour {
 	void rotateRight(){
 		if (!facing.Equals("right") && !facing.Equals("left")) {
 			if(facing.Equals("front")){
+
 				transform.Rotate (0,0,-90);
 			}
 			else{
+
 				transform.Rotate (0,0,90);
 			}
 
@@ -78,9 +112,11 @@ public class Ship : MonoBehaviour {
 	void rotateFront(){
 		if (!facing.Equals("front") && !facing.Equals("down")) {
 			if(facing.Equals("right")){
+
 				transform.Rotate (0,0,90);
 			}
 			else{
+			
 				transform.Rotate (0,0,-90);
 			}
 			facing = "front";
@@ -90,14 +126,60 @@ public class Ship : MonoBehaviour {
 	void rotateDown(){
 		if (!facing.Equals("down") && !facing.Equals("front")) {
 			if(facing.Equals("right")){
+
 				transform.Rotate (0,0,-90);
 			}
 			else{
+
 				transform.Rotate (0,0,90);
 			}
 			facing = "down";
 		}	
 	}
-	
 
+
+	public void fire(){
+		GameObject barrel = getChildGameObject (gameObject, "Barrel");
+		GameObject go = (GameObject)Instantiate(bullet, barrel.transform.position, barrel.transform.rotation);
+		go.GetComponent<BulletObject> ().direction = facing;
+
+
+
+	}
+	public void stopMoving(){
+		Vector3 v1 = rigidbody2D.velocity;
+		v1.x = 0;
+		v1.y = 0;
+		rigidbody2D.velocity = v1;
+
+	}
+	//Choque de la nave
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		this.gameObject.SetActive (false);
+
+		if (this.player == 1) {
+			GameController.controller.playerWins (2);
+		} else {
+			GameController.controller.playerWins (1);
+		}
+	}
+
+
+	void OnTriggerStay2D(Collider2D other)
+	{
+		Debug.Log("Still colliding with trigger object " + other.name);
+	}
+	
+	void OnTriggerExit2D(Collider2D other)
+	{
+		Debug.Log(gameObject.name + " and trigger object " + other.name + " are no longer colliding");
+	}
+	
+	static public GameObject getChildGameObject(GameObject fromGameObject, string withName) {
+		//Author: Isaac Dart, June-13.
+		Transform[] ts = fromGameObject.transform.GetComponentsInChildren<Transform>();
+		foreach (Transform t in ts) if (t.gameObject.name == withName) return t.gameObject;
+		return null;
+	}
 }

@@ -59,6 +59,11 @@ public class UDPClient {
 			// Inicializamos un paquete para almacenar la data 
 			Paquete receivedData = new Paquete(GetString(this.dataStream));
 			//Actualizamos el Mundo del Juego
+			//Si el server nos da acceso accedemos a la pantalla del juego.
+			if(receivedData.identificadorPaquete == Paquete.Identificador.accesoAutorizado){
+				GameController.controller.connected = true;
+
+			}
 
 				//...pendiente
 
