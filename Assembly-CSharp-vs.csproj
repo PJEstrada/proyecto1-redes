@@ -47,15 +47,19 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Bullet.cs" />
+     <Compile Include="Assets\BulletObject.cs" />
      <Compile Include="Assets\GameController.cs" />
+     <Compile Include="Assets\MainGame.cs" />
      <Compile Include="Assets\Paquete.cs" />
      <Compile Include="Assets\Ship.cs" />
+     <Compile Include="Assets\TCPClient.cs" />
+     <Compile Include="Assets\TCPServer.cs" />
      <Compile Include="Assets\UDPClient.cs" />
      <Compile Include="Assets\UDPServer.cs" />
      <Compile Include="Assets\WelcomeScreen.cs" />
      <Compile Include="Assets\omega_fighter_01\script\MouseLook.cs" />
      <None Include="Assets\Space Shooter\Info.txt" />
-     <None Include="Assets\CartoonSpacecraft\Standard Assets\Skyboxes\ skybox info.txt" />
+     <None Include="Assets\CartoonSpacecraft\Standard Assets\Skyboxes\skybox info.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.2/UnityEngine.UI.dll</HintPath>
  </Reference>

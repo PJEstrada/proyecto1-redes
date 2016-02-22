@@ -1,0 +1,38 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch Pablo
+# Your branch is ahead of 'origin/Pablo' by 3 commits.
+#   (use "git push" to publish your local commits)
+#
+# Changes to be committed:
+#	modified:   Assembly-CSharp-vs.csproj
+#	modified:   Assembly-CSharp.csproj
+#	modified:   Assets/GameController.cs
+#	new file:   Assets/MainGame.cs
+#	new file:   Assets/MainGame.cs.meta
+#	modified:   Assets/Paquete.cs
+#	modified:   Assets/Ship.cs
+#	modified:   Assets/UDPClient.cs
+#	modified:   Assets/UDPServer.cs
+#	modified:   Assets/WelcomeScreen.cs
+#	modified:   Assets/mainGame.unity
+#	modified:   Assets/welcomeScreen.unity
+#	modified:   Library/CurrentLayout.dwlt
+#	modified:   Library/ScriptAssemblies/Assembly-CSharp.dll.mdb
+#	modified:   Library/ScriptAssemblies/Assembly-UnityScript.dll.mdb
+#	modified:   Library/assetDatabase3
+#	modified:   Library/expandedItems
+#	modified:   Library/guidmapper
+#	modified:   Library/metadata/38/3871a74e4c7a4484ebf024c1fd1d841e
+#	modified:   Library/metadata/74/74e0ba6fe4d4bb14f89eea41bdb51b76
+#	new file:   Library/metadata/76/76abec68fdcbd4d4b861d5a138c780b7
+#	modified:   Library/metadata/91/91dfdbebdc3d4e24a80e30955dd7278d
+#	modified:   Library/metadata/98/9869ee83aaf6f1047b12a923945016d6
+#	modified:   Library/metadata/f7/f7ae4cc96c87ccf47840dd957e493279
+#	modified:   Library/metadata/fb/fb61bd6427c90944282ae4e3c8735a50
+#	modified:   proyecto1-redes-csharp.sln
+#	modified:   proyecto1-redes.sln
+#	modified:   proyecto1-redes.userprefs
+#
+

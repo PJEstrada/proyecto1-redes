@@ -10,6 +10,7 @@ using System.IO;
 [XmlRoot("Paquete")]
 public class Paquete {
 
+	public int id;
 	//El identificador del paquete. Aqui ira la accion que se esta enviando en el juego 
 	public enum Identificador
 	{
@@ -17,16 +18,18 @@ public class Paquete {
 		moverDerecha,
 		moverArriba,
 		moverAbajo,
-		avanzar,
 		disparar,
 		conectar,
+		accesoAutorizado,
+		jugadorListo,
+		colision,
 		Null
 	}
 	public Identificador identificadorPaquete;
 	public int jugador; 
 
 	[XmlArray("B"),XmlArrayItem("Bullet")]
-	public List<Bullet> bullets = new List<Bullet> ();
+	public List<BulletMessage> bullets = new List<BulletMessage> ();
 
 
 
@@ -38,7 +41,7 @@ public class Paquete {
 	{
 		this.identificadorPaquete = Identificador.Null;
 		this.jugador = -1;
-	    this.bullets = new List<Bullet> ();
+		this.bullets = new List<BulletMessage> ();
 	}
 	
 	
