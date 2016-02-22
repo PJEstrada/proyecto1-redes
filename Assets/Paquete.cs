@@ -10,6 +10,7 @@ using System.IO;
 [XmlRoot("Paquete")]
 public class Paquete {
 
+	public int id;
 	//El identificador del paquete. Aqui ira la accion que se esta enviando en el juego 
 	public enum Identificador
 	{
@@ -21,6 +22,7 @@ public class Paquete {
 		disparar,
 		conectar,
 		accesoAutorizado,
+		jugadorListo,
 		Null
 	}
 	public Identificador identificadorPaquete;

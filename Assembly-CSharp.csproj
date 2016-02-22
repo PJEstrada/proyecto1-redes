@@ -49,6 +49,7 @@
      <Compile Include="Assets\Bullet.cs" />
      <Compile Include="Assets\BulletObject.cs" />
      <Compile Include="Assets\GameController.cs" />
+     <Compile Include="Assets\MainGame.cs" />
      <Compile Include="Assets\Paquete.cs" />
      <Compile Include="Assets\Ship.cs" />
      <Compile Include="Assets\UDPClient.cs" />

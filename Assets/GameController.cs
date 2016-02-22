@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour {
 	//Server
 	public UDPServer server;
 	public bool onGame; //Variable para saber si ya ha iniciado el juego
-
+	public bool isServer; //Variable para saber si estamos en el cliente(false) o en el servidor (true)
 
 	public Text messages; //Mensajes de conexion en pantalla de inicion
 	public UDPClient client;//Client  
@@ -21,16 +21,19 @@ public class GameController : MonoBehaviour {
 	public float timeBetweenSpawn=0.05f;
 	public GameObject borderLeft, borderRight, borderTop, borderDown;
 	public bool gameOn,connected;
-	public GameObject jugarDeNuevo,salir;
-	GameObject ready;
-	GameObject listoText;
+	public GameObject jugarDeNuevo,salir,listoText;
+	public GameObject ready;
+	public Boolean imReady,opponentReady;
+	public MainGame mainGame;
 	void Awake(){
-
+		Debug.Log ("NUEVO AWAKE");
 		if (controller == null) {
-			controller = this;
 
+			controller = this;
+			DontDestroyOnLoad (gameObject);
 		
-		} else {
+		} else if(controller != this) {
+			Debug.Log ("Destruyo el nuevo controller");
 			Destroy(gameObject);
 		}
 
@@ -70,7 +73,14 @@ public class GameController : MonoBehaviour {
 		gameOn = false;
 		connected = false;
 		//Cerramos conexiones con cliente y servidor
+		if (this.isServer == true) {
+			GameController.controller.server.serverSocket.Close();
 		
+		} 
+		else {
+			GameController.controller.client.clientSocket.Close();
+		
+		}
 		//... To Do
 		
 		Application.LoadLevel (0);
@@ -103,51 +113,18 @@ public class GameController : MonoBehaviour {
 	void Update () {
 		if (GameController.controller.connected == true) {
 			Application.LoadLevel (1);
-
-			ready = GameObject.Find ("Ready");
-			listoText = GameObject.Find ("Listo");
-			listoText.SetActive (false);
-			jugarDeNuevo = GameObject.Find ("JugarDeNuevo");
-			salir = GameObject.Find ("Salir");
-			jugarDeNuevo.SetActive (false);
-			salir.SetActive (false);			
+			GameController.controller.connected=false;
+			GameController.controller.gameOn=false;
 		}	
+		if (GameController.controller.imReady == true && GameController.controller.opponentReady == true) {
+			Debug.Log("JUGADORES LISTOS");
+			GameController.controller.mainGame.startGame();
+			GameController.controller.imReady =false;
+			GameController.controller.opponentReady = false;
+
+		}
 
 	}
-
-
-	public void playerReady(){
-		//Eliminando texto 
-		GameObject temp =GameObject.Find 	("Win");
-		Text text = temp.GetComponent<Text> ();
-		text.enabled = false;
-		//Escondiendo botones y textos
-		listoText.SetActive (false);
-		
-		salir.SetActive (false);
-		jugarDeNuevo.SetActive (false);
-		//Reactivando Naves
-		player1.SetActive (true);
-		player2.SetActive (true);
-
-
-
-		ready.GetComponent<Image>().color = Color.green;
-		gameOn = true;
-		player1.GetComponent<Ship>().facing ="front";
-		player2.GetComponent<Ship>().facing ="down";
-		player2.transform.position =new Vector3 (-50,0,0);
-		player1.transform.position =new Vector3 (50,0,0);
-		player1.transform.eulerAngles = new Vector3(0,0,0);
-		player2.transform.eulerAngles = new Vector3(0,0,180);
 
 	
-
-		player1.GetComponent<Ship> ().startMoving ();
-		player2.GetComponent<Ship> ().startMoving ();
-		ready.SetActive (false);
-
-
-	}
-
 }

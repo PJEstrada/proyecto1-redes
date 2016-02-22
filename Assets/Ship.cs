@@ -8,6 +8,8 @@ public class Ship : MonoBehaviour {
 	public float speed;
 	public GameObject bullet;
 	public int player;
+	public KeyCode moveUp,moveDown,moveLeft,moveRight,fireBtn;
+
 	// Use this for initialization
 	void Start () {
 
@@ -19,16 +21,16 @@ public class Ship : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (GameController.controller.gameOn==true) {
-			if (Input.GetKeyDown ("left")) {
+			if (Input.GetKeyDown (moveLeft)) {
 				rotateLeft ();
 				
-			} else if (Input.GetKeyDown ("down")) {
+			} else if (Input.GetKeyDown (moveDown)) {
 				rotateDown ();
-			} else if (Input.GetKeyDown ("up")) {
+			} else if (Input.GetKeyDown (moveUp)) {
 				rotateFront ();
-			} else if (Input.GetKeyDown ("right")) {
+			} else if (Input.GetKeyDown (moveRight)) {
 				rotateRight ();
-			} else if (Input.GetKeyDown ("z")) {
+			} else if (Input.GetKeyDown (fireBtn)) {
 				fire ();
 			}		
 		

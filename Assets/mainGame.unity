@@ -461,6 +461,11 @@ MonoBehaviour:
   speed: 300
   bullet: {fileID: 193798, guid: d3cbf0107e36a3540bcdd796c8e6ed99, type: 2}
   player: 2
+  moveUp: 119
+  moveDown: 115
+  moveLeft: 97
+  moveRight: 100
+  fireBtn: 118
 --- !u!61 &729120915
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -767,6 +772,72 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 906788802}
+--- !u!1 &910513261
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 910513262}
+  - 222: {fileID: 910513264}
+  - 114: {fileID: 910513263}
+  m_Layer: 8
+  m_Name: EsperandoOponente
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &910513262
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 910513261}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1597463573}
+  m_RootOrder: 3
+  m_AnchorMin: {x: .5, y: .5}
+  m_AnchorMax: {x: .5, y: .5}
+  m_AnchoredPosition: {x: -12.7500029, y: -65.9000015}
+  m_SizeDelta: {x: 185.5, y: 30}
+  m_Pivot: {x: .5, y: .5}
+--- !u!114 &910513263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 910513261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Esperando a Oponente...
+--- !u!222 &910513264
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 910513261}
 --- !u!1 &1018760447
 GameObject:
   m_ObjectHideFlags: 0
@@ -849,6 +920,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1193509047}
   - 212: {fileID: 1193509046}
+  - 114: {fileID: 1193509048}
   m_Layer: 8
   m_Name: bg
   m_TagString: Untagged
@@ -891,6 +963,22 @@ Transform:
   - {fileID: 1597463573}
   m_Father: {fileID: 0}
   m_RootOrder: 3
+--- !u!114 &1193509048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1193509045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76abec68fdcbd4d4b861d5a138c780b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  salir: {fileID: 906788802}
+  listoText: {fileID: 2096115064}
+  ready: {fileID: 1321330009}
+  jugarDeNuevo: {fileID: 1193670276}
+  esperandoOponente: {fileID: 910513261}
 --- !u!1 &1193670276
 GameObject:
   m_ObjectHideFlags: 0
@@ -1150,7 +1238,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1919625987}
+      - m_Target: {fileID: 1193509048}
         m_MethodName: playerReady
         m_Mode: 1
         m_Arguments:
@@ -1249,6 +1337,7 @@ RectTransform:
   - {fileID: 1321330010}
   - {fileID: 520599935}
   - {fileID: 2096115065}
+  - {fileID: 910513262}
   m_Father: {fileID: 1193509047}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
@@ -1345,6 +1434,11 @@ MonoBehaviour:
   speed: 300
   bullet: {fileID: 193798, guid: d3cbf0107e36a3540bcdd796c8e6ed99, type: 2}
   player: 1
+  moveUp: 273
+  moveDown: 274
+  moveLeft: 276
+  moveRight: 275
+  fireBtn: 109
 --- !u!61 &1599723476
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1592,6 +1686,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onGame: 0
+  isServer: 0
   messages: {fileID: 0}
   player1: {fileID: 1599723474}
   player2: {fileID: 729120912}
@@ -1601,8 +1696,14 @@ MonoBehaviour:
   borderTop: {fileID: 0}
   borderDown: {fileID: 0}
   gameOn: 0
+  connected: 0
   jugarDeNuevo: {fileID: 0}
   salir: {fileID: 0}
+  listoText: {fileID: 0}
+  ready: {fileID: 0}
+  imReady: 0
+  opponentReady: 0
+  mainGame: {fileID: 0}
 --- !u!1 &2096115064
 GameObject:
   m_ObjectHideFlags: 0

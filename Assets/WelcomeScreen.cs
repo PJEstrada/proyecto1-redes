@@ -1,15 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Net.Sockets;
 public class WelcomeScreen : MonoBehaviour {
-	public bool isServer; //Variable para saber si estamos en el cliente(false) o en el servidor (true)
+
 	public Toggle checkbox; //Checkbox de la pantalla de incicio
 	public InputField ipInput; //Input de la pantalla de inicio (para la ip)
 	public Button iniciar;
 	public Text waitingMessage;
 	// Use this for initialization
 	void Start () {
-	
+
 	}
 	
 	// Update is called once per frame
@@ -24,33 +30,39 @@ public class WelcomeScreen : MonoBehaviour {
 		
 		//Verificamos contenido del checkbox
 		if (checkbox.isOn) {
-			this.isServer = true;
+			GameController.controller.isServer = true;
+			;
 		} 
 		else {
-			this.isServer = false;
+			GameController.controller.isServer = false;
+			Debug.Log ("SOY CLIENTE");
 		}
-		
-		
-		if (isServer == true) {
+		if (GameController.controller.isServer == true) {
 			//Creamos servidor
 			GameController.controller.server = new UDPServer();
+			Debug.Log ("CREADO EL SERVER");
 			iniciar.interactable = false;
-			waitingMessage.enabled = true;
-
-			
+			waitingMessage.enabled = true;	
 			
 		} 
 		else {
-			GameController.controller.client = new UDPClient(ipInput.text);
-			
-			
+			try{
+				GameController.controller.client = new UDPClient(ipInput.text);
+				waitingMessage.text = "Esperando respuesta del servidor.";
+				waitingMessage.enabled =true;
+			}
+			catch (FormatException e){
+				waitingMessage.text = "La ip ingresada no es correcta. Intenta con otra IP.";
+				waitingMessage.enabled =true;
+				Debug.LogException(e);
+
+			}
+			catch(SocketException e){
+				waitingMessage.text = "Error de conexion al servidor, verifica que el servidor este corriendo.";
+				waitingMessage.enabled =true;
+				Debug.LogException(e);
+			}
 		}
-
-
-
-
-		
-		
 		
 	}
 

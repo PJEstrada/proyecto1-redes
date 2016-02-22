@@ -16,11 +16,12 @@ public class UDPServer {
 		public EndPoint endPoint;
 		public string nombre;
 	}
-	
+	public int entrantPackagesCounter;
+	public int sendingPackagesCounter;	
 	// Listado de clientes
 	ArrayList listaClientes;
 	// Server socket
-	Socket serverSocket;
+	public Socket serverSocket;
 	// Stream de datos
 	byte[] dataStream = new byte[1024];
 	// Status delegate
@@ -33,10 +34,11 @@ public class UDPServer {
 		{
 			// Iniciando array de clientes conectados
 			this.listaClientes = new ArrayList();
-			
+			entrantPackagesCounter = 0;
+			sendingPackagesCounter = 0;			
 			// Inicializando el delegado para actualizar estado
 			//this.updateStatusDelegate = new UpdateStatusDelegate(this.UpdateStatus);
-			
+		
 			// Inicializando el socket
 			serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 			
@@ -54,8 +56,7 @@ public class UDPServer {
 			
 			// Empezar a escuhar datos entrantes
 			serverSocket.BeginReceiveFrom(this.dataStream, 0, this.dataStream.Length, SocketFlags.None, ref epSender, new AsyncCallback(ReceiveData), epSender);
-			
-			GameController.controller.messages.enabled = true;
+
 		}
 		catch (Exception ex)
 		{
@@ -64,14 +65,28 @@ public class UDPServer {
 	}
 
 
+	public void sendMessage(Paquete p){
+		byte[] data	;
+		p.id = this.sendingPackagesCounter;
+		// Obtenemos los bytes del paquete
+		data = GetBytes(p.GetDataStream());		
+		foreach (Cliente client in this.listaClientes)
+		{
+			// Enviar a todos los clientes
+			serverSocket.BeginSendTo(data, 0, data.Length, SocketFlags.None, client.endPoint, new AsyncCallback(this.enviarData), client.endPoint);	
+		}
+	}
+
 
 	
-
+	//Metodo que se llama al finalizar el envio de datos
 	public void enviarData(IAsyncResult asyncResult)
 	{
 		try
 		{
+			Debug.Log("Enviando data : ");
 			serverSocket.EndSend(asyncResult);
+			this.sendingPackagesCounter++;
 		}
 		catch (Exception ex)
 		{
@@ -79,14 +94,31 @@ public class UDPServer {
 		}
 	}
 
-
+	//Metodo que se llama al finalizar recepcion datos
 	private void ReceiveData(IAsyncResult asyncResult)
 	{
 		try
 		{
+			Debug.Log("Recibiendo data : ");
 			byte[] data	;
 			// Paquete para almacenar la data recibida
 			Paquete receivedData = new Paquete(GetString(this.dataStream));
+			receivedData.GetDataStream();
+			//Verificamos que el paquete venga en el ordern correcto.
+
+			Debug.Log("Received data num : "+receivedData.id);
+			Debug.Log ("Server Counter: "+this.entrantPackagesCounter);
+			if(receivedData.id<this.entrantPackagesCounter){
+				Debug.Log("Paquete Descartado : ");
+				return; //Descartamos el paquete
+
+			}
+			else if(receivedData.id > this.entrantPackagesCounter){
+				this.entrantPackagesCounter = receivedData.id;
+			}
+			else{
+				this.entrantPackagesCounter++;
+			}
 			// Initialise the IPEndPoint for the clients
 			IPEndPoint clients = new IPEndPoint(IPAddress.Any, 0);
 			// Initialise the EndPoint for the clients
@@ -99,20 +131,34 @@ public class UDPServer {
 			if(receivedData.identificadorPaquete == Paquete.Identificador.conectar){
 				// Empezamos a crear el paquete a ser enviado
 				Paquete sendData = new Paquete();
+				sendData.id = this.sendingPackagesCounter;
 				sendData.identificadorPaquete = Paquete.Identificador.accesoAutorizado;
 				GameController.controller.connected = true;
+				Cliente client2 = new Cliente();
+				client2.endPoint = epSender;
+				client2.nombre = "Player2";
+
+				// Add client to list
+				this.listaClientes.Add(client2);
 
 				// Obtenemos los bytes del paquete
 				data = GetBytes(sendData.GetDataStream());
 				/*Se envia el paquete a todos los clientes*/
 				foreach (Cliente client in this.listaClientes)
 				{
-					if (client.endPoint != epSender)
-					{
+					Debug.Log("Enviando a cliente..");
+				
+
 						// Enviar a todos los clientes
 						serverSocket.BeginSendTo(data, 0, data.Length, SocketFlags.None, client.endPoint, new AsyncCallback(this.enviarData), client.endPoint);
-					}
+						Debug.Log("Envio Exitoso.");
+					
 				}
+
+			}
+			else if(receivedData.identificadorPaquete == Paquete.Identificador.jugadorListo){
+				GameController.controller.opponentReady=true;
+
 
 			}
 
@@ -124,7 +170,7 @@ public class UDPServer {
 		}
 		catch (Exception ex)
 		{
-			Debug.Log("ReceiveData Error: " + ex.Message+ "UDP Server");
+			throw ex;
 		}
 	}
 
