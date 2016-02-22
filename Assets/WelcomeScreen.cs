@@ -10,7 +10,7 @@ using System.Net.Sockets;
 public class WelcomeScreen : MonoBehaviour {
 
 	public Toggle checkbox; //Checkbox de la pantalla de incicio
-	public InputField ipInput; //Input de la pantalla de inicio (para la ip)
+	public static InputField ipInput; //Input de la pantalla de inicio (para la ip)
 	public Button iniciar;
 	public Text waitingMessage;
 	// Use this for initialization
@@ -40,6 +40,7 @@ public class WelcomeScreen : MonoBehaviour {
 		if (GameController.controller.isServer == true) {
 			//Creamos servidor
 			GameController.controller.server = new UDPServer();
+			GameController.controller.tcpServer = new TCPServer();
 			Debug.Log ("CREADO EL SERVER");
 			iniciar.interactable = false;
 			waitingMessage.enabled = true;	
@@ -48,6 +49,7 @@ public class WelcomeScreen : MonoBehaviour {
 		else {
 			try{
 				GameController.controller.client = new UDPClient(ipInput.text);
+				GameController.controller.tcpClient = new TCPClient();
 				waitingMessage.text = "Esperando respuesta del servidor.";
 				waitingMessage.enabled =true;
 			}

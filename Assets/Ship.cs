@@ -93,6 +93,8 @@ public class Ship : MonoBehaviour {
 			facing = "left";
 		}
 
+		//Mandamos mensaje (Decidir si antes de pintar o despues)
+
 	}
 
 	void rotateRight(){
@@ -109,6 +111,7 @@ public class Ship : MonoBehaviour {
 
 			facing = "right";
 		}	
+		//Mandamos Mensaje (Decidir si antes de pintar o despues)
 	}
 
 	void rotateFront(){
@@ -122,6 +125,8 @@ public class Ship : MonoBehaviour {
 				transform.Rotate (0,0,-90);
 			}
 			facing = "front";
+		
+			//Mandamos Mensaje (Decidir si antes de pintar o despues)
 		}		
 	}
 
@@ -145,7 +150,7 @@ public class Ship : MonoBehaviour {
 		GameObject go = (GameObject)Instantiate(bullet, barrel.transform.position, barrel.transform.rotation);
 		go.GetComponent<BulletObject> ().direction = facing;
 
-
+		//Mandamos Mensaje (Decidir si antes de pintar o despues)
 
 	}
 	public void stopMoving(){

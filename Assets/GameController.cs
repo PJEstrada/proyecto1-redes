@@ -12,7 +12,8 @@ public class GameController : MonoBehaviour {
 	public UDPServer server;
 	public bool onGame; //Variable para saber si ya ha iniciado el juego
 	public bool isServer; //Variable para saber si estamos en el cliente(false) o en el servidor (true)
-
+	public TCPServer tcpServer;
+	public TCPClient tcpClient;
 	public Text messages; //Mensajes de conexion en pantalla de inicion
 	public UDPClient client;//Client  
 	/*--------------------Variables del juego-----------------------*/

@@ -52,6 +52,8 @@
      <Compile Include="Assets\MainGame.cs" />
      <Compile Include="Assets\Paquete.cs" />
      <Compile Include="Assets\Ship.cs" />
+     <Compile Include="Assets\TCPClient.cs" />
+     <Compile Include="Assets\TCPServer.cs" />
      <Compile Include="Assets\UDPClient.cs" />
      <Compile Include="Assets\UDPServer.cs" />
      <Compile Include="Assets\WelcomeScreen.cs" />

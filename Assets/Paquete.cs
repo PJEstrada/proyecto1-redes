@@ -18,11 +18,11 @@ public class Paquete {
 		moverDerecha,
 		moverArriba,
 		moverAbajo,
-		avanzar,
 		disparar,
 		conectar,
 		accesoAutorizado,
 		jugadorListo,
+		colision,
 		Null
 	}
 	public Identificador identificadorPaquete;
