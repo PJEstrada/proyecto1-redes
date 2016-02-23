@@ -1,15 +1,15 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TCPClient.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\UDPClient.cs">
     <Files>
-      <File FileName="Assets\TCPServer.cs" Line="108" Column="1" />
+      <File FileName="Assets\TCPClient.cs" Line="92" Column="49" />
+      <File FileName="Assets\TCPServer.cs" Line="71" Column="49" />
       <File FileName="Assets\WelcomeScreen.cs" Line="1" Column="1" />
       <File FileName="Assets\MainGame.cs" Line="1" Column="1" />
       <File FileName="Assets\GameController.cs" Line="1" Column="1" />
-      <File FileName="Assets\UDPClient.cs" Line="1" Column="1" />
-      <File FileName="Assets\UDPServer.cs" Line="1" Column="1" />
+      <File FileName="Assets\UDPClient.cs" Line="98" Column="7" />
+      <File FileName="Assets\UDPServer.cs" Line="145" Column="7" />
       <File FileName="Assets\Paquete.cs" Line="1" Column="1" />
-      <File FileName="Assets\TCPClient.cs" Line="109" Column="1" />
       <File FileName="Assets\Ship.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
