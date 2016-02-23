@@ -15,7 +15,7 @@ public class WelcomeScreen : MonoBehaviour {
 	public Text waitingMessage;
 	// Use this for initialization
 	void Start () {
-
+		ipInput = GameObject.Find ("InputField").GetComponent<InputField> ();
 	}
 	
 	// Update is called once per frame
