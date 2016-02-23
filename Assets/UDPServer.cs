@@ -129,7 +129,7 @@ public class UDPServer {
 
 			// Actualizamos el mundo del server...Pendiente
 			if(receivedData.identificadorPaquete == Paquete.Identificador.conectar){
-				// Empezamos a crear el paquete a ser enviado
+				/*// Empezamos a crear el paquete a ser enviado
 				Paquete sendData = new Paquete();
 				sendData.id = this.sendingPackagesCounter;
 				sendData.identificadorPaquete = Paquete.Identificador.accesoAutorizado;
@@ -139,12 +139,12 @@ public class UDPServer {
 				client2.nombre = "Player2";
 
 				// Add client to list
-				this.listaClientes.Add(client2);
+				this.listaClientes.Add(client2);*/
 
 				// Obtenemos los bytes del paquete
-				data = GetBytes(sendData.GetDataStream());
+				//data = GetBytes(sendData.GetDataStream());
 				/*Se envia el paquete a todos los clientes*/
-				foreach (Cliente client in this.listaClientes)
+				/*foreach (Cliente client in this.listaClientes)
 				{
 					Debug.Log("Enviando a cliente..");
 				
@@ -152,12 +152,12 @@ public class UDPServer {
 						// Enviar a todos los clientes
 						serverSocket.BeginSendTo(data, 0, data.Length, SocketFlags.None, client.endPoint, new AsyncCallback(this.enviarData), client.endPoint);
 						Debug.Log("Envio Exitoso.");
-					
-				}
+
+				}*/
 
 			}
 			else if(receivedData.identificadorPaquete == Paquete.Identificador.jugadorListo){
-				GameController.controller.opponentReady=true;
+				//GameController.controller.opponentReady=true;
 
 
 			}

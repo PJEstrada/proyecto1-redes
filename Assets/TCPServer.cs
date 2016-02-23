@@ -8,6 +8,16 @@ using System;
 
 public class TCPServer : MonoBehaviour {
 	TcpClient mClient;
+
+	private struct Cliente
+	{
+		public EndPoint endPoint;
+		public string nombre;
+	}
+	ArrayList listaClientes;
+	public int entrantPackagesCounter;
+	public int sendingPackagesCounter;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -19,6 +29,8 @@ public class TCPServer : MonoBehaviour {
 	}
 
 	public TCPServer(){
+		IPEndPoint clients = new IPEndPoint(IPAddress.Any, 0);
+		EndPoint epSender = (EndPoint)clients;
 		Thread tcpServerRunThread = new Thread(new ThreadStart (TcpServerRun));
 		tcpServerRunThread.Start ();
 		Debug.Log ("TCP SERVER");
@@ -56,7 +68,7 @@ public class TCPServer : MonoBehaviour {
 			sendMessage(p);
 		
 		} else if (accion == Paquete.Identificador.jugadorListo) {
-		
+			GameController.controller.opponentReady=true;
 		
 		} else if (accion == Paquete.Identificador.moverAbajo) {
 		
@@ -72,9 +84,32 @@ public class TCPServer : MonoBehaviour {
 		} else if (accion == Paquete.Identificador.colision) {
 		
 		}
+		else if( accion == Paquete.Identificador.conectar){
+			byte[] data	;
+			// Empezamos a crear el paquete a ser enviado
+			Paquete sendData = new Paquete();
+			sendData.id = this.sendingPackagesCounter;
+			sendData.identificadorPaquete = Paquete.Identificador.accesoAutorizado;
+			GameController.controller.connected = true;
+			Cliente client2 = new Cliente();
+			// Initialise the IPEndPoint for the clients
+			IPEndPoint clients = new IPEndPoint(IPAddress.Any, 0);
+			// Initialise the EndPoint for the clients
+			EndPoint epSender = (EndPoint)clients;
+			client2.endPoint = epSender;
+			client2.nombre = "Player2";
+			
+			// Add client to list
+			this.listaClientes.Add(client2);
 
-		stream.Close ();
-		mClient.Close ();
+			/*Se envia el paquete a  los clientes*/
+			sendMessage(sendData);
+
+
+		}
+
+		//stream.Close ();
+		//mClient.Close ();
 	
 	}
 

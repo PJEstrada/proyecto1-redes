@@ -17,9 +17,9 @@ public class UDPClient {
 	public int sendingPackagesCounter;
 
 	public UDPClient(string serverIP) {
-		Paquete sendData = new Paquete ();
-		sendData.id = 0;
-		sendData.identificadorPaquete = Paquete.Identificador.conectar;
+		//Paquete sendData = new Paquete ();
+		//sendData.id = 0;
+		//sendData.identificadorPaquete = Paquete.Identificador.conectar;
 		entrantPackagesCounter = 0;
 		sendingPackagesCounter = 0;
 		//Creamos conexion
@@ -31,10 +31,10 @@ public class UDPClient {
 			
 			epServer = (EndPoint)server;
 			Debug.Log("Enviando data de inicio de conexion: ");
-			string  data = sendData.GetDataStream();
-			byte[] dataBytes = GetBytes (data);
+			//string  data = sendData.GetDataStream();
+			//byte[] dataBytes = GetBytes (data);
 			//Enviar solicitud de conexion al servidor
-			clientSocket.BeginSendTo (dataBytes,0,dataBytes.Length,SocketFlags.None,epServer,new System.AsyncCallback(this.SendData),null);
+			//clientSocket.BeginSendTo (dataBytes,0,dataBytes.Length,SocketFlags.None,epServer,new System.AsyncCallback(this.SendData),null);
 			// Inicializando el dataStream
 			this.dataStream = new byte[1024];
 			// Empezamos a escuhar respuestas del servidor
@@ -91,11 +91,11 @@ public class UDPClient {
 			//Actualizamos el Mundo del Juego
 			//Si el server nos da acceso accedemos a la pantalla del juego.
 			if(receivedData.identificadorPaquete == Paquete.Identificador.accesoAutorizado){
-				GameController.controller.connected = true;
+				//GameController.controller.connected = true;
 
 			}
 			else if(receivedData.identificadorPaquete == Paquete.Identificador.jugadorListo){
-				GameController.controller.opponentReady=true;
+				//GameController.controller.opponentReady=true;
 				
 				
 			}

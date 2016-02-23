@@ -87,6 +87,9 @@ public class TCPClient : MonoBehaviour {
 			
 		} else if (accion == Paquete.Identificador.accesoAutorizado) {
 			Debug.Log ("TCP: Ya me autorizaron :)");
+			GameController.controller.connected = true;
+		} else if (accion == Paquete.Identificador.jugadorListo) {
+			GameController.controller.opponentReady=true;
 		}
 
 	}
