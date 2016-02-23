@@ -27,7 +27,7 @@ public class UDPClient {
 		//Inicializamos IP del servidor
 		try{
 			IPAddress ipServer = IPAddress.Parse (serverIP);
-			IPEndPoint server = new IPEndPoint (ipServer, 30000);
+			IPEndPoint server = new IPEndPoint (ipServer, 30001);
 			
 			epServer = (EndPoint)server;
 			Debug.Log("Enviando data de inicio de conexion: ");

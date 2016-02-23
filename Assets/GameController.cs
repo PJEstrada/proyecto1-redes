@@ -9,13 +9,15 @@ public class GameController : MonoBehaviour {
 
 	public static GameController controller;
 	//Server
-	public UDPServer server;
+
 	public bool onGame; //Variable para saber si ya ha iniciado el juego
 	public bool isServer; //Variable para saber si estamos en el cliente(false) o en el servidor (true)
 	public TCPServer tcpServer;
 	public TCPClient tcpClient;
+	public UDPClient clientUDP;//Client 
+	public UDPServer serverUDP;
 	public Text messages; //Mensajes de conexion en pantalla de inicion
-	public UDPClient client;//Client  
+ 
 	/*--------------------Variables del juego-----------------------*/
 	public GameObject player1;
 	public GameObject player2;
@@ -75,11 +77,11 @@ public class GameController : MonoBehaviour {
 		connected = false;
 		//Cerramos conexiones con cliente y servidor
 		if (this.isServer == true) {
-			GameController.controller.server.serverSocket.Close();
+			GameController.controller.serverUDP.serverSocket.Close();
 		
 		} 
 		else {
-			GameController.controller.client.clientSocket.Close();
+			GameController.controller.clientUDP.clientSocket.Close();
 		
 		}
 		//... To Do
