@@ -30,7 +30,7 @@ public class TCPClient : MonoBehaviour {
 
 	public void ConnectAsClient(){
 
-		client.Connect(IPAddress.Parse(WelcomeScreen.ipInput.text), 30000);
+		client.Connect(IPAddress.Parse(WelcomeScreen.ipInput.text.ToString()), 30000);
 
 		NetworkStream stream = client.GetStream ();
 		Paquete msg = new Paquete ();
@@ -49,7 +49,7 @@ public class TCPClient : MonoBehaviour {
 
 		NetworkStream stream = client.GetStream ();
 		String s = p.GetDataStream ();
-		byte[] message = Encoding.ASCII.GetBytes (s);
+		byte[] message = GetBytes (s);
 		stream.Write (message, 0,message.Length);
 
 
@@ -62,10 +62,12 @@ public class TCPClient : MonoBehaviour {
 	}
 
 	public void receiveMessage(){
+		Debug.Log ("TCP: En handler del Cliente");
 		NetworkStream stream = client.GetStream ();
 		byte[] bb=new byte[1024];
 		stream.Read (bb,0,bb.Length);
 		Paquete p = new Paquete(GetString(bb));
+		Debug.Log ("Client: el xml tcp:" + p.GetDataStream ()); 
 		Paquete.Identificador accion = p.identificadorPaquete;
 		if (accion == Paquete.Identificador.jugadorListo) {
 			
@@ -84,7 +86,7 @@ public class TCPClient : MonoBehaviour {
 		} else if (accion == Paquete.Identificador.colision) {
 			
 		} else if (accion == Paquete.Identificador.accesoAutorizado) {
-			Debug.Log ("Ya me autorizaron :)");
+			Debug.Log ("TCP: Ya me autorizaron :)");
 		}
 
 	}

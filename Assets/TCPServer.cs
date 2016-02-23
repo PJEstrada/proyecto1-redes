@@ -7,7 +7,7 @@ using System.Threading;
 using System;
 
 public class TCPServer : MonoBehaviour {
-
+	TcpClient mClient;
 	// Use this for initialization
 	void Start () {
 	
@@ -21,7 +21,7 @@ public class TCPServer : MonoBehaviour {
 	public TCPServer(){
 		Thread tcpServerRunThread = new Thread(new ThreadStart (TcpServerRun));
 		tcpServerRunThread.Start ();
-		
+		Debug.Log ("TCP SERVER");
 	
 	}
 	public void TcpServerRun(){
@@ -38,15 +38,19 @@ public class TCPServer : MonoBehaviour {
 	//Receive Message
 	public void  tcpHandler(object client){
 
-		TcpClient mClient = (TcpClient)client;
+		Debug.Log ("TCP: En handler del server");
+	    mClient = (TcpClient)client;
 		NetworkStream stream = mClient.GetStream ();
 		byte[] message = new byte[1024];
+		Debug.Log ("antes TCPClient:");
 		stream.Read (message, 0, message.Length);
+		Debug.Log ("despues TCPClient:");
 		Paquete receivedData = new Paquete (GetString (message));
+		Debug.Log ("Client: el xml tcp:" + receivedData.GetDataStream ()); 
 		Paquete.Identificador accion = receivedData.identificadorPaquete;
 
 		if (accion == Paquete.Identificador.conectar) {
-			Debug.Log("Ya me conecte");
+			Debug.Log("TCP: Ya me conecte");
 			Paquete p = new Paquete();
 			p.identificadorPaquete = Paquete.Identificador.accesoAutorizado;
 			sendMessage(p);
@@ -77,7 +81,10 @@ public class TCPServer : MonoBehaviour {
 	public void sendMessage(Paquete p){
 
 
-
+		NetworkStream stream = mClient.GetStream ();
+		String s = p.GetDataStream ();
+		byte[] message = GetBytes (s);
+		stream.Write (message, 0,message.Length);
 	
 	}
 
