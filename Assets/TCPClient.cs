@@ -7,9 +7,10 @@ using System.IO;
 using System.Threading;
 using System;
 
-public class TCPClient : MonoBehaviour {
+public class TCPClient{
 
 	TcpClient client;
+	static string ip;
 	// Use this for initialization
 	void Start () {
 	
@@ -22,6 +23,7 @@ public class TCPClient : MonoBehaviour {
 
 	public TCPClient(){
 		client = new TcpClient ();
+		//client.Connect(IPAddress.Parse(WelcomeScreen.ipInput.text.ToString()), 30000);
 		Thread mThread = new Thread(new ThreadStart(ConnectAsClient));
 		mThread.Start ();
 
@@ -29,12 +31,11 @@ public class TCPClient : MonoBehaviour {
 	}
 
 	public void ConnectAsClient(){
+		ip = WelcomeScreen.ipInput.text.ToString ();
 
-		client.Connect(IPAddress.Parse(WelcomeScreen.ipInput.text.ToString()), 30000);
 
-		NetworkStream stream = client.GetStream ();
+		client.Connect(IPAddress.Parse(ip), 30000);
 		Paquete msg = new Paquete ();
-
 		msg.identificadorPaquete = Paquete.Identificador.conectar;
 		sendMessage (msg);
 
@@ -66,11 +67,12 @@ public class TCPClient : MonoBehaviour {
 		NetworkStream stream = client.GetStream ();
 		byte[] bb=new byte[1024];
 		stream.Read (bb,0,bb.Length);
-		Paquete p = new Paquete(GetString(bb));
+		string s = GetString (bb);
+		Paquete p = new Paquete(s);
 		Debug.Log ("Client: el xml tcp:" + p.GetDataStream ()); 
 		Paquete.Identificador accion = p.identificadorPaquete;
 		if (accion == Paquete.Identificador.jugadorListo) {
-			
+			GameController.controller.opponentReady=true;
 			
 		} else if (accion == Paquete.Identificador.moverAbajo) {
 			
@@ -88,8 +90,6 @@ public class TCPClient : MonoBehaviour {
 		} else if (accion == Paquete.Identificador.accesoAutorizado) {
 			Debug.Log ("TCP: Ya me autorizaron :)");
 			GameController.controller.connected = true;
-		} else if (accion == Paquete.Identificador.jugadorListo) {
-			GameController.controller.opponentReady=true;
 		}
 
 	}

@@ -43,7 +43,7 @@ public class UDPServer {
 			serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 			
 			// Inicializar IP y escuhar puerto 30000
-			IPEndPoint server = new IPEndPoint(IPAddress.Any, 30000);
+			IPEndPoint server = new IPEndPoint(IPAddress.Any, 30001);
 			
 			// Asociar socket con el IP dado y el puerto
 			serverSocket.Bind(server);

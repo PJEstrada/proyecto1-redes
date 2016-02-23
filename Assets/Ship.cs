@@ -163,7 +163,7 @@ public class Ship : MonoBehaviour {
 	//Choque de la nave
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		this.gameObject.SetActive (false);
+		this.gameObject.GetComponent<SpriteRenderer> ().enabled = false;
 
 		if (this.player == 1) {
 			GameController.controller.playerWins (2);
