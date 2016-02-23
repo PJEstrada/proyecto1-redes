@@ -31,7 +31,7 @@ public class WelcomeScreen : MonoBehaviour {
 		//Verificamos contenido del checkbox
 		if (checkbox.isOn) {
 			GameController.controller.isServer = true;
-			;
+
 		} 
 		else {
 			GameController.controller.isServer = false;
@@ -50,6 +50,7 @@ public class WelcomeScreen : MonoBehaviour {
 			try{
 				GameController.controller.client = new UDPClient(ipInput.text);
 				GameController.controller.tcpClient = new TCPClient();
+
 				waitingMessage.text = "Esperando respuesta del servidor.";
 				waitingMessage.enabled =true;
 			}

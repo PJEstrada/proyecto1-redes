@@ -1,0 +1,17 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\MainGame.cs">
+    <Files>
+      <File FileName="Assets\TCPServer.cs" Line="75" Column="34" />
+      <File FileName="Assets\MainGame.cs" Line="25" Column="18" />
+      <File FileName="Assets\UDPServer.cs" Line="1" Column="1" />
+      <File FileName="Assets\UDPClient.cs" Line="1" Column="1" />
+      <File FileName="Assets\GameController.cs" Line="124" Column="2" />
+      <File FileName="Assets\TCPClient.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

@@ -1,20 +1,22 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\UDPClient.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\UDPServer.cs">
     <Files>
-      <File FileName="Assets\TCPClient.cs" Line="92" Column="49" />
-      <File FileName="Assets\TCPServer.cs" Line="71" Column="49" />
-      <File FileName="Assets\WelcomeScreen.cs" Line="1" Column="1" />
-      <File FileName="Assets\MainGame.cs" Line="1" Column="1" />
-      <File FileName="Assets\GameController.cs" Line="1" Column="1" />
-      <File FileName="Assets\UDPClient.cs" Line="98" Column="7" />
-      <File FileName="Assets\UDPServer.cs" Line="145" Column="7" />
+      <File FileName="Assets\TCPServer.cs" Line="34" Column="3" />
+      <File FileName="Assets\TCPClient.cs" Line="36" Column="1" />
+      <File FileName="Assets\WelcomeScreen.cs" Line="47" Column="4" />
+      <File FileName="Assets\MainGame.cs" Line="69" Column="9" />
+      <File FileName="Assets\GameController.cs" Line="34" Column="21" />
+      <File FileName="Assets\UDPClient.cs" Line="30" Column="55" />
+      <File FileName="Assets\UDPServer.cs" Line="46" Column="59" />
       <File FileName="Assets\Paquete.cs" Line="1" Column="1" />
       <File FileName="Assets\Ship.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="C:\Users\pablo\Dropbox\Año 5 Semestre 1\Redes\Proyecto 1 -Redes\proyecto1-redes\Assets\TCPClient.cs" line="65" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

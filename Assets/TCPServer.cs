@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading;
 using System;
 
-public class TCPServer : MonoBehaviour {
+public class TCPServer{
 	TcpClient mClient;
 
 	private struct Cliente
@@ -33,6 +33,7 @@ public class TCPServer : MonoBehaviour {
 		EndPoint epSender = (EndPoint)clients;
 		Thread tcpServerRunThread = new Thread(new ThreadStart (TcpServerRun));
 		tcpServerRunThread.Start ();
+		//TcpServerRun ();
 		Debug.Log ("TCP SERVER");
 	
 	}
@@ -55,58 +56,41 @@ public class TCPServer : MonoBehaviour {
 		NetworkStream stream = mClient.GetStream ();
 		byte[] message = new byte[1024];
 		Debug.Log ("antes TCPClient:");
-		stream.Read (message, 0, message.Length);
-		Debug.Log ("despues TCPClient:");
-		Paquete receivedData = new Paquete (GetString (message));
-		Debug.Log ("Client: el xml tcp:" + receivedData.GetDataStream ()); 
-		Paquete.Identificador accion = receivedData.identificadorPaquete;
-
-		if (accion == Paquete.Identificador.conectar) {
-			Debug.Log("TCP: Ya me conecte");
-			Paquete p = new Paquete();
-			p.identificadorPaquete = Paquete.Identificador.accesoAutorizado;
-			sendMessage(p);
-		
-		} else if (accion == Paquete.Identificador.jugadorListo) {
-			GameController.controller.opponentReady=true;
-		
-		} else if (accion == Paquete.Identificador.moverAbajo) {
-		
-		} else if (accion == Paquete.Identificador.moverArriba) {
-		
-		
-		} else if (accion == Paquete.Identificador.moverIzquierda) {
-		
-		} else if (accion == Paquete.Identificador.moverDerecha) {
-		
-		} else if (accion == Paquete.Identificador.disparar) {
-		
-		} else if (accion == Paquete.Identificador.colision) {
-		
-		}
-		else if( accion == Paquete.Identificador.conectar){
-			byte[] data	;
-			// Empezamos a crear el paquete a ser enviado
-			Paquete sendData = new Paquete();
-			sendData.id = this.sendingPackagesCounter;
-			sendData.identificadorPaquete = Paquete.Identificador.accesoAutorizado;
-			GameController.controller.connected = true;
-			Cliente client2 = new Cliente();
-			// Initialise the IPEndPoint for the clients
-			IPEndPoint clients = new IPEndPoint(IPAddress.Any, 0);
-			// Initialise the EndPoint for the clients
-			EndPoint epSender = (EndPoint)clients;
-			client2.endPoint = epSender;
-			client2.nombre = "Player2";
+		while (true) {
+			stream.Read (message, 0, message.Length);
+			Debug.Log ("despues TCPClient:");
+			Paquete receivedData = new Paquete (GetString (message));
+			Debug.Log ("Client: el xml tcp:" + receivedData.GetDataStream ()); 
+			Paquete.Identificador accion = receivedData.identificadorPaquete;
 			
-			// Add client to list
-			this.listaClientes.Add(client2);
-
-			/*Se envia el paquete a  los clientes*/
-			sendMessage(sendData);
-
-
+			if (accion == Paquete.Identificador.conectar) {
+				Debug.Log("TCP: Ya me conecte");
+				Paquete p = new Paquete();
+				p.identificadorPaquete = Paquete.Identificador.accesoAutorizado;
+				sendMessage(p);
+				GameController.controller.connected = true;
+				
+				
+				
+			} else if (accion == Paquete.Identificador.jugadorListo) {
+				GameController.controller.opponentReady=true;
+				
+			} else if (accion == Paquete.Identificador.moverAbajo) {
+				
+			} else if (accion == Paquete.Identificador.moverArriba) {
+				
+				
+			} else if (accion == Paquete.Identificador.moverIzquierda) {
+				
+			} else if (accion == Paquete.Identificador.moverDerecha) {
+				
+			} else if (accion == Paquete.Identificador.disparar) {
+				
+			} else if (accion == Paquete.Identificador.colision) {
+				
+			}
 		}
+
 
 		//stream.Close ();
 		//mClient.Close ();

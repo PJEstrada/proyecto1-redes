@@ -7,7 +7,7 @@ using System.IO;
 using System.Threading;
 using System;
 
-public class TCPClient : MonoBehaviour {
+public class TCPClient{
 
 	TcpClient client;
 	// Use this for initialization
@@ -34,7 +34,6 @@ public class TCPClient : MonoBehaviour {
 
 		NetworkStream stream = client.GetStream ();
 		Paquete msg = new Paquete ();
-
 		msg.identificadorPaquete = Paquete.Identificador.conectar;
 		sendMessage (msg);
 
@@ -66,7 +65,8 @@ public class TCPClient : MonoBehaviour {
 		NetworkStream stream = client.GetStream ();
 		byte[] bb=new byte[1024];
 		stream.Read (bb,0,bb.Length);
-		Paquete p = new Paquete(GetString(bb));
+		string s = GetString (bb);
+		Paquete p = new Paquete(s);
 		Debug.Log ("Client: el xml tcp:" + p.GetDataStream ()); 
 		Paquete.Identificador accion = p.identificadorPaquete;
 		if (accion == Paquete.Identificador.jugadorListo) {

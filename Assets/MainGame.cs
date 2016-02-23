@@ -28,6 +28,8 @@ public class MainGame : MonoBehaviour {
 
 	public void startGame(){
 		Debug.Log ("Inciando Juego");
+		esperandoOponente.SetActive (false);
+		GameController.controller.gameOn = true;
 		GameController.controller.player1.GetComponent<Ship>().facing ="front";
 		GameController.controller.player2.GetComponent<Ship>().facing ="down";
 		GameController.controller.player2.transform.position =new Vector3 (-50,0,0);
@@ -66,7 +68,7 @@ public class MainGame : MonoBehaviour {
 			//Enviamos mensaje de jugador listo a cliente
 			Paquete p = new Paquete ();
 			p.identificadorPaquete = Paquete.Identificador.jugadorListo;
-			GameController.controller.server.sendMessage (p);
+			GameController.controller.tcpServer.sendMessage(p);
 			
 		} else {
 			
@@ -74,7 +76,7 @@ public class MainGame : MonoBehaviour {
 			//Enviamos mensaje de jugador listo a cliente
 			Paquete p = new Paquete ();
 			p.identificadorPaquete = Paquete.Identificador.jugadorListo;
-			GameController.controller.client.sendMessage (p);		
+			GameController.controller.tcpClient.sendMessage (p);		
 		}
 	}
 
