@@ -23,6 +23,7 @@ public class Paquete {
 		accesoAutorizado,
 		jugadorListo,
 		colision,
+		desconectar,
 		Null
 	}
 	public Identificador identificadorPaquete;

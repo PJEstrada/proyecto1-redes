@@ -74,9 +74,11 @@ public class TCPServer  {
 				
 			} else if (accion == Paquete.Identificador.jugadorListo) {
 				GameController.controller.opponentReady=true;
+
 				
 			} else if (accion == Paquete.Identificador.moverAbajo) {
-				
+
+
 			} else if (accion == Paquete.Identificador.moverArriba) {
 				
 				
@@ -100,6 +102,11 @@ public class TCPServer  {
 	
 	}
 
+	public void CloseConnection(){
+
+		mClient.Close ();	
+	
+	}
 	public void sendMessage(Paquete p){
 
 

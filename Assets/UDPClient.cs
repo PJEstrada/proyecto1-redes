@@ -99,8 +99,12 @@ public class UDPClient {
 				
 				
 			}
-				//...pendiente
+			else if(receivedData.identificadorPaquete == Paquete.Identificador.desconectar){
+				GameController.controller.mm2 = true;
 
+			}
+				//...pendiente
+				
 
 			// Reset data stream
 			this.dataStream = new byte[1024];
