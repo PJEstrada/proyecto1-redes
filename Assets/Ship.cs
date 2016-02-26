@@ -54,39 +54,42 @@ public class Ship : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (GameController.controller.gameOn==true) {
-			if(player==1 && GameController.controller.isServer || player==2 && GameController.controller.isServer==false){
-				if(rLeft){
-					this.rotateLeft_2();
-					rLeft = false;
-				}
-				if(rRight){
-					this.rotateRight_2();
-					rRight = false;
-				}
-				if(rUp){
-					this.rotateFront_2();
-					rUp = false;
-				}
-				if(rDown){
-					this.rotateDown_2();
-					rDown = false;
-				}
+			if((this.player==1 && GameController.controller.isServer==true) || (this.player==2 && GameController.controller.isServer==false)){
+				
+				if (Input.GetKeyDown (moveLeft)) {
+					rotateLeft ();
+					
+				} else if (Input.GetKeyDown (moveDown)) {
+					rotateDown ();
+				} else if (Input.GetKeyDown (moveUp)) {
+					rotateFront ();
+				} else if (Input.GetKeyDown (moveRight)) {
+					rotateRight ();
+				} else if (Input.GetKeyDown (fireBtn)) {
+					fire ();
+				}	
 				
 			}
-			/*----------------------------*/
+			if(rLeft){
+				this.rotateLeft_2();
+				rLeft = false;
+			}
+			if(rRight){
+				this.rotateRight_2();
+				rRight = false;
+			}
+			if(rUp){
+				this.rotateFront_2();
+				rUp = false;
+			}
+			if(rDown){
+				this.rotateDown_2();
+				rDown = false;
+			}
 			
-			if (Input.GetKeyDown (moveLeft)) {
-				rotateLeft ();
-				
-			} else if (Input.GetKeyDown (moveDown)) {
-				rotateDown ();
-			} else if (Input.GetKeyDown (moveUp)) {
-				rotateFront ();
-			} else if (Input.GetKeyDown (moveRight)) {
-				rotateRight ();
-			} else if (Input.GetKeyDown (fireBtn)) {
-				fire ();
-			}		
+
+			/*----------------------------*/
+	
 			
 			
 		}

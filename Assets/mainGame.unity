@@ -461,11 +461,11 @@ MonoBehaviour:
   speed: 100
   bullet: {fileID: 193798, guid: d3cbf0107e36a3540bcdd796c8e6ed99, type: 2}
   player: 2
-  moveUp: 119
-  moveDown: 115
-  moveLeft: 97
-  moveRight: 100
-  fireBtn: 118
+  moveUp: 273
+  moveDown: 274
+  moveLeft: 276
+  moveRight: 275
+  fireBtn: 122
   rLeft: 0
   rRight: 0
   rUp: 0

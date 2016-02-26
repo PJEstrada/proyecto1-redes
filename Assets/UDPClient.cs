@@ -104,8 +104,10 @@ public class UDPClient {
 
 			//Actualizamos el Mundo del Juego
 
-			if(receivedData.identificadorPaquete == Paquete.Identificador.accesoAutorizado){
-				//GameController.controller.connected = true;
+			if(receivedData.identificadorPaquete == Paquete.Identificador.nuevaPos){
+				float x = receivedData.x;
+				//GameController.controller.player1.transform.x =
+				//GameController.controller.player1.transform.position.y = receivedData.y;
 
 			}
 
