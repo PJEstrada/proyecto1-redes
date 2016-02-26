@@ -167,6 +167,17 @@ public class UDPServer {
 				GameController.controller.mm2 = true;
 
 			}
+			else if(receivedData.identificadorPaquete == Paquete.Identificador.nuevaPos){
+
+				//Verificando que la nave del cliente se encuentre en una posicion correcta
+				bool correctPosition=false;
+				//X ->   ,  Y -> 25
+				if(GameController.controller.player2.transform.position.x >= receivedData.x +5.0 ){
+
+
+				}
+
+			}
 
 			
 			// Volvemos a escuchar conexiones nuevamente...
