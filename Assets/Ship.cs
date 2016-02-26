@@ -14,15 +14,13 @@ public class Ship : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-<<<<<<< HEAD
-=======
 		rLeft = false;
 		rRight = false;
 		rUp = false;
 		rDown = false;
 
 
->>>>>>> refs/remotes/origin/master
+
 
 	}
 
