@@ -458,7 +458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   facing: 
   timeBetweenMove: .5
-  speed: 300
+  speed: 100
   bullet: {fileID: 193798, guid: d3cbf0107e36a3540bcdd796c8e6ed99, type: 2}
   player: 2
   moveUp: 119
@@ -466,6 +466,10 @@ MonoBehaviour:
   moveLeft: 97
   moveRight: 100
   fireBtn: 118
+  rLeft: 0
+  rRight: 0
+  rUp: 0
+  rDown: 0
 --- !u!61 &729120915
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1054,7 +1058,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1919625987}
+      - m_Target: {fileID: 1193509048}
         m_MethodName: playerReady
         m_Mode: 1
         m_Arguments:
@@ -1431,7 +1435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   facing: 
   timeBetweenMove: .5
-  speed: 300
+  speed: 100
   bullet: {fileID: 193798, guid: d3cbf0107e36a3540bcdd796c8e6ed99, type: 2}
   player: 1
   moveUp: 273
@@ -1439,6 +1443,10 @@ MonoBehaviour:
   moveLeft: 276
   moveRight: 275
   fireBtn: 109
+  rLeft: 0
+  rRight: 0
+  rUp: 0
+  rDown: 0
 --- !u!61 &1599723476
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1690,6 +1698,8 @@ MonoBehaviour:
   messages: {fileID: 0}
   player1: {fileID: 1599723474}
   player2: {fileID: 729120912}
+  ship1: {fileID: 0}
+  ship2: {fileID: 0}
   timeBetweenSpawn: .0500000007
   borderLeft: {fileID: 0}
   borderRight: {fileID: 0}

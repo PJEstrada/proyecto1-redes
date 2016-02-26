@@ -39,7 +39,7 @@ public class WelcomeScreen : MonoBehaviour {
 		}
 		if (GameController.controller.isServer == true) {
 			//Creamos servidor
-			GameController.controller.server = new UDPServer();
+			GameController.controller.serverUDP = new UDPServer();
 			GameController.controller.tcpServer = new TCPServer();
 			Debug.Log ("CREADO EL SERVER");
 			iniciar.interactable = false;
@@ -48,7 +48,7 @@ public class WelcomeScreen : MonoBehaviour {
 		} 
 		else {
 			try{
-				GameController.controller.client = new UDPClient(ipInput.text);
+				GameController.controller.clientUDP = new UDPClient(ipInput.text);
 				GameController.controller.tcpClient = new TCPClient();
 
 				waitingMessage.text = "Esperando respuesta del servidor.";

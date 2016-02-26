@@ -2,17 +2,21 @@
 using System.Collections;
 
 public class Ship : MonoBehaviour {
-
+	
 	public string facing;
 	public float timeBetweenMove;
 	public float speed;
 	public GameObject bullet;
 	public int player;
 	public KeyCode moveUp,moveDown,moveLeft,moveRight,fireBtn;
-
+	public bool rLeft, rRight, rUp, rDown;
+	
 	// Use this for initialization
 	void Start () {
-
+		rLeft = false;
+		rRight = false;
+		rUp = false;
+		rDown = false;
 	}
 	public void startMoving(){
 		
@@ -21,6 +25,27 @@ public class Ship : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (GameController.controller.gameOn==true) {
+			if(player==1 && GameController.controller.isServer || player==2 && GameController.controller.isServer==false){
+				if(rLeft){
+					this.rotateLeft_2();
+					rLeft = false;
+				}
+				if(rRight){
+					this.rotateRight_2();
+					rRight = false;
+				}
+				if(rUp){
+					this.rotateFront_2();
+					rUp = false;
+				}
+				if(rDown){
+					this.rotateDown_2();
+					rDown = false;
+				}
+				
+			}
+			/*----------------------------*/
+			
 			if (Input.GetKeyDown (moveLeft)) {
 				rotateLeft ();
 				
@@ -33,12 +58,12 @@ public class Ship : MonoBehaviour {
 			} else if (Input.GetKeyDown (fireBtn)) {
 				fire ();
 			}		
-		
-		
+			
+			
 		}
-
-
-
+		
+		
+		
 	}
 	void MoveShip(){
 		if (GameController.controller.gameOn==true) {
@@ -73,106 +98,223 @@ public class Ship : MonoBehaviour {
 			}
 			
 			Invoke("MoveShip",GameController.controller.timeBetweenSpawn);		
-		
-		
+			
+			
 		}
-
+		
 	}
-
-	void rotateLeft(){
 	
+	void rotateLeft(){
+		
 		if (!facing.Equals("right") && !facing.Equals("left")) {
 			if(facing.Equals("front")){
-			
+				
 				transform.Rotate (0,0,90);
 			}
 			else{
-
+				
+				transform.Rotate (0,0,-90);
+			}
+			facing = "left";
+			
+			//Mandamos mensaje (Decidir si antes de pintar o despues)
+			//crear paquete a enviar
+			Paquete p = new Paquete ();
+			p.identificadorPaquete = Paquete.Identificador.moverIzquierda;
+			
+			if (GameController.controller.isServer) {
+				//es server
+				//escribir al cliente que 
+				GameController.controller.tcpServer.sendMessage(p);
+				
+			} else {
+				//es cliente
+				//escribir al server que roto
+				GameController.controller.tcpClient.sendMessage(p);
+			}
+		}
+	}
+	
+	void rotateRight(){
+		if (!facing.Equals("right") && !facing.Equals("left")) {
+			if(facing.Equals("front")){
+				
+				transform.Rotate (0,0,-90);
+			}
+			else{
+				
+				transform.Rotate (0,0,90);
+			}
+			facing = "right";
+			
+			//Mandamos Mensaje (Decidir si antes de pintar o despues)
+			Paquete p = new Paquete ();
+			p.identificadorPaquete = Paquete.Identificador.moverDerecha;
+			
+			if (GameController.controller.isServer) {
+				//es server
+				//escribir al cliente que 
+				GameController.controller.tcpServer.sendMessage(p);
+				
+			} else {
+				//es cliente
+				//escribir al server que roto
+				GameController.controller.tcpClient.sendMessage(p);
+			}
+		}	
+	}
+	
+	void rotateFront(){
+		if (!facing.Equals("front") && !facing.Equals("down")) {
+			if(facing.Equals("right")){
+				
+				transform.Rotate (0,0,90);
+			}
+			else{
+				
+				transform.Rotate (0,0,-90);
+			}
+			facing = "front";
+			
+			//Mandamos Mensaje (Decidir si antes de pintar o despues)
+			Paquete p = new Paquete ();
+			p.identificadorPaquete = Paquete.Identificador.moverArriba;
+			
+			if (GameController.controller.isServer) {
+				//es server
+				//escribir al cliente que 
+				GameController.controller.tcpServer.sendMessage(p);
+				
+			} else {
+				//es cliente
+				//escribir al server que roto
+				GameController.controller.tcpClient.sendMessage(p);
+			}
+		}	
+	}
+	
+	void rotateDown(){
+		if (!facing.Equals("down") && !facing.Equals("front")) {
+			if(facing.Equals("right")){
+				
+				transform.Rotate (0,0,-90);
+			}
+			else{
+				
+				transform.Rotate (0,0,90);
+			}
+			facing = "down";
+			
+			//Envair mensaje
+			Paquete p = new Paquete ();
+			p.identificadorPaquete = Paquete.Identificador.moverAbajo;
+			
+			if (GameController.controller.isServer) {
+				//es server
+				//escribir al cliente que 
+				GameController.controller.tcpServer.sendMessage(p);
+				
+			} else {
+				//es cliente
+				//escribir al server que roto
+				GameController.controller.tcpClient.sendMessage(p);
+			}
+		}
+	}
+	
+	public void rotateLeft_2(){
+		
+		if (!facing.Equals("right") && !facing.Equals("left")) {
+			if(facing.Equals("front")){
+				
+				transform.Rotate (0,0,90);
+			}
+			else{
+				
 				transform.Rotate (0,0,-90);
 			}
 			facing = "left";
 		}
-
-		//Mandamos mensaje (Decidir si antes de pintar o despues)
-
+		//No mandamos mensaje
 	}
-
-	void rotateRight(){
+	
+	public void rotateRight_2(){
 		if (!facing.Equals("right") && !facing.Equals("left")) {
 			if(facing.Equals("front")){
-
+				
 				transform.Rotate (0,0,-90);
 			}
 			else{
-
+				
 				transform.Rotate (0,0,90);
 			}
-
-
+			
+			
 			facing = "right";
 		}	
-		//Mandamos Mensaje (Decidir si antes de pintar o despues)
+		//No mandamos mensaje
 	}
-
-	void rotateFront(){
+	
+	public void rotateFront_2(){
 		if (!facing.Equals("front") && !facing.Equals("down")) {
 			if(facing.Equals("right")){
-
+				
 				transform.Rotate (0,0,90);
 			}
 			else{
-			
+				
 				transform.Rotate (0,0,-90);
 			}
 			facing = "front";
-		
-			//Mandamos Mensaje (Decidir si antes de pintar o despues)
-		}		
+			
+			//No Mandamos Mensaje (Decidir si antes de pintar o despues)
+		}	
 	}
-
-	void rotateDown(){
+	
+	public void rotateDown_2(){
 		if (!facing.Equals("down") && !facing.Equals("front")) {
 			if(facing.Equals("right")){
-
+				
 				transform.Rotate (0,0,-90);
 			}
 			else{
-
+				
 				transform.Rotate (0,0,90);
 			}
 			facing = "down";
 		}	
+		//No enviar mensaje
 	}
-
-
+	
+	
 	public void fire(){
 		GameObject barrel = getChildGameObject (gameObject, "Barrel");
 		GameObject go = (GameObject)Instantiate(bullet, barrel.transform.position, barrel.transform.rotation);
 		go.GetComponent<BulletObject> ().direction = facing;
-
+		
 		//Mandamos Mensaje (Decidir si antes de pintar o despues)
-
+		
 	}
 	public void stopMoving(){
 		Vector3 v1 = rigidbody2D.velocity;
 		v1.x = 0;
 		v1.y = 0;
 		rigidbody2D.velocity = v1;
-
+		
 	}
 	//Choque de la nave
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		this.gameObject.SetActive (false);
-
+		this.gameObject.GetComponent<SpriteRenderer> ().enabled = false;
+		
 		if (this.player == 1) {
 			GameController.controller.playerWins (2);
 		} else {
 			GameController.controller.playerWins (1);
 		}
 	}
-
-
+	
+	
 	void OnTriggerStay2D(Collider2D other)
 	{
 		Debug.Log("Still colliding with trigger object " + other.name);
