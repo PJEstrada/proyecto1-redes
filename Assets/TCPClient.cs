@@ -63,7 +63,7 @@ public class TCPClient{
 	}
 	
 	public void receiveMessage(){
-		Debug.Log ("TCP: En handler del Cliente");
+		Debug.Log ("TCP CLIENT: En metodo lectura");
 		NetworkStream stream = client.GetStream ();
 		byte[] bb=new byte[1024];
 		stream.Read (bb,0,bb.Length);
@@ -91,13 +91,14 @@ public class TCPClient{
 			GameController.controller.ship1.rRight = true;
 			
 		} else if (accion == Paquete.Identificador.disparar) {
-			
+			GameController.controller.ship1.fireB = true;
 		} else if (accion == Paquete.Identificador.colision) {
 			
 		} else if (accion == Paquete.Identificador.accesoAutorizado) {
 			Debug.Log ("TCP: Ya me autorizaron :)");
 			GameController.controller.connected = true;
 		}
+
 		
 	}
 	/*-------------------------------------FIN AREA SERVER------------------------------------------------------*/
