@@ -54,6 +54,7 @@ public class UDPClient {
 	public void sendMessage(Paquete p){
 		byte[] data	;
 		p.id = this.sendingPackagesCounter;
+		sendingPackagesCounter++;
 		// Obtenemos los bytes del paquete
 		data = GetBytes(p.GetDataStream());		
 		// Enviar al servidor
@@ -66,7 +67,7 @@ public class UDPClient {
 		try
 		{
 			clientSocket.EndSend(ar);
-			this.sendingPackagesCounter++;
+
 
 		}
 		catch (Exception ex)
@@ -82,33 +83,37 @@ public class UDPClient {
 
 			// Recibimos toda la data
 			this.clientSocket.EndReceive(ar);
-			
 			// Inicializamos un paquete para almacenar la data 
 			Paquete receivedData = new Paquete(GetString(this.dataStream));
-			
-			Debug.Log("Received data num : "+receivedData.id);
-			Debug.Log ("Client Counter: "+this.entrantPackagesCounter);
+			Debug.Log("UDP Client: Received data num : "+receivedData.id);
+			Debug.Log ("UDP Client: Client Counter: "+this.entrantPackagesCounter);
+			if(receivedData.id<this.entrantPackagesCounter){
+				Debug.Log("UDP Client: Paquete Descartado : ");
+				return; //Descartamos el paquete
+				
+			}
+			else if(receivedData.id > this.entrantPackagesCounter){
+				this.entrantPackagesCounter = receivedData.id;
+			}
+			else{
+				this.entrantPackagesCounter++;
+			}			
+
+
+
+
 			//Actualizamos el Mundo del Juego
-			//Si el server nos da acceso accedemos a la pantalla del juego.
+
 			if(receivedData.identificadorPaquete == Paquete.Identificador.accesoAutorizado){
 				//GameController.controller.connected = true;
 
 			}
-			else if(receivedData.identificadorPaquete == Paquete.Identificador.jugadorListo){
-				//GameController.controller.opponentReady=true;
-				
-				
-			}
-			else if(receivedData.identificadorPaquete == Paquete.Identificador.desconectar){
-				GameController.controller.mm2 = true;
 
-			}
-				//...pendiente
+
 				
 
 			// Reset data stream
 			this.dataStream = new byte[1024];
-			this.entrantPackagesCounter++;
 			// Continue listening for broadcasts
 			clientSocket.BeginReceiveFrom(this.dataStream, 0, this.dataStream.Length, SocketFlags.None, ref epServer, new AsyncCallback(this.ReceiveData), null);
 		}

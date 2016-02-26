@@ -13,6 +13,31 @@ public class Ship : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+
+	}
+
+
+	public void sendPosition(){
+		float x, y;
+		x = transform.position.x;
+		y = transform.position.y;
+		Paquete p = new Paquete ();
+		p.identificadorPaquete = Paquete.Identificador.nuevaPos;
+		p.x = x;
+		p.y = y;
+		if (GameController.controller.isServer) {
+			GameController.controller.serverUDP.sendMessage(p);
+		} else {
+			GameController.controller.clientUDP.sendMessage(p);
+		
+		}
+
+
+	}
+
+	public void checkPosition(){
+
+	
 	}
 	public void startMoving(){
 		

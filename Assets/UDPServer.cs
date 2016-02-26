@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Net.Sockets;
+
 public class UDPServer {
 
 
@@ -68,6 +69,7 @@ public class UDPServer {
 	public void sendMessage(Paquete p){
 		byte[] data	;
 		p.id = this.sendingPackagesCounter;
+		sendingPackagesCounter++;
 		// Obtenemos los bytes del paquete
 		data = GetBytes(p.GetDataStream());		
 		foreach (Cliente client in this.listaClientes)
@@ -86,7 +88,7 @@ public class UDPServer {
 		{
 			Debug.Log("Enviando data : ");
 			serverSocket.EndSend(asyncResult);
-			this.sendingPackagesCounter++;
+
 		}
 		catch (Exception ex)
 		{
@@ -106,8 +108,8 @@ public class UDPServer {
 			receivedData.GetDataStream();
 			//Verificamos que el paquete venga en el ordern correcto.
 
-			Debug.Log("Received data num : "+receivedData.id);
-			Debug.Log ("Server Counter: "+this.entrantPackagesCounter);
+			Debug.Log("UDP Server: Received data num : "+receivedData.id);
+			Debug.Log ("UDP Server: Server Counter: "+this.entrantPackagesCounter);
 			if(receivedData.id<this.entrantPackagesCounter){
 				Debug.Log("Paquete Descartado : ");
 				return; //Descartamos el paquete

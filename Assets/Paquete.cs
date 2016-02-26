@@ -24,11 +24,12 @@ public class Paquete {
 		jugadorListo,
 		colision,
 		desconectar,
+		nuevaPos,
 		Null
 	}
 	public Identificador identificadorPaquete;
 	public int jugador; 
-
+	public float x,y;
 	[XmlArray("B"),XmlArrayItem("Bullet")]
 	public List<BulletMessage> bullets = new List<BulletMessage> ();
 
