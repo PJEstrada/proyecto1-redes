@@ -8,7 +8,7 @@ using System;
 
 public class TCPServer  {
 	TcpClient mClient;
-
+	
 	private struct Cliente
 	{
 		public EndPoint endPoint;
@@ -17,17 +17,17 @@ public class TCPServer  {
 	ArrayList listaClientes;
 	public int entrantPackagesCounter;
 	public int sendingPackagesCounter;
-
+	
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
-
+	
 	public TCPServer(){
 		IPEndPoint clients = new IPEndPoint(IPAddress.Any, 0);
 		EndPoint epSender = (EndPoint)clients;
@@ -35,24 +35,24 @@ public class TCPServer  {
 		tcpServerRunThread.Start ();
 		//TcpServerRun ();
 		Debug.Log ("TCP SERVER");
-	
+		
 	}
 	public void TcpServerRun(){
 		TcpListener tcpListener = new TcpListener (IPAddress.Any, 30000);
 		tcpListener.Start ();
-
+		
 		while(true){
 			TcpClient client = tcpListener.AcceptTcpClient();
 			Thread tcpHandlerThread = new Thread(new ParameterizedThreadStart(tcpHandler));
 			tcpHandlerThread.Start(client);
 		}
 	}
-
+	
 	//Receive Message
 	public void  tcpHandler(object client){
-
+		
 		Debug.Log ("TCP: En handler del server");
-	    mClient = (TcpClient)client;
+		mClient = (TcpClient)client;
 		NetworkStream stream = mClient.GetStream ();
 		byte[] message = new byte[1024];
 		Debug.Log ("antes TCPClient:");
@@ -77,30 +77,38 @@ public class TCPServer  {
 
 				
 			} else if (accion == Paquete.Identificador.moverAbajo) {
-
+				//mover abajo el cliente
+				GameController.controller.ship2.rDown = true;
 
 			} else if (accion == Paquete.Identificador.moverArriba) {
-				
+				//mover arriba el cliente
+				GameController.controller.ship2.rUp = true;
 				
 			} else if (accion == Paquete.Identificador.moverIzquierda) {
+				//mover izquierda el cliente
+				GameController.controller.ship2.rLeft = true;
 				
 			} else if (accion == Paquete.Identificador.moverDerecha) {
+				//mover derecha cliente
+				GameController.controller.ship2.rRight = true;
+				
 				
 			} else if (accion == Paquete.Identificador.disparar) {
 				
 			} else if (accion == Paquete.Identificador.colision) {
 				
 			}		
-		
-		
+			
+			
 		}
-
-
-
+		
+		
+		
 		//stream.Close ();
 		//mClient.Close ();
-	
+		
 	}
+
 
 	public void CloseConnection(){
 
@@ -108,15 +116,15 @@ public class TCPServer  {
 	
 	}
 	public void sendMessage(Paquete p){
-
-
+		
+		
 		NetworkStream stream = mClient.GetStream ();
 		String s = p.GetDataStream ();
 		byte[] message = GetBytes (s);
 		stream.Write (message, 0,message.Length);
-	
+		
 	}
-
+	
 	/*-------------------------------------FIN AREA SERVER------------------------------------------------------*/
 	// Helper Methods
 	static byte[] GetBytes(string str)
@@ -132,5 +140,5 @@ public class TCPServer  {
 		System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
 		return new string(chars);
 	}
-
+	
 }

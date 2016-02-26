@@ -8,60 +8,60 @@ using System.Threading;
 using System;
 
 public class TCPClient{
-
+	
 	TcpClient client;
 	static string ip;
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
-
+	
 	public TCPClient(){
 		client = new TcpClient ();
 		//client.Connect(IPAddress.Parse(WelcomeScreen.ipInput.text.ToString()), 30000);
 		Thread mThread = new Thread(new ThreadStart(ConnectAsClient));
 		mThread.Start ();
-
-
+		
+		
 	}
-
+	
 	public void ConnectAsClient(){
 		ip = WelcomeScreen.ipInput.text.ToString ();
-
-
+		
+		
 		client.Connect(IPAddress.Parse(ip), 30000);
 		Paquete msg = new Paquete ();
 		msg.identificadorPaquete = Paquete.Identificador.conectar;
 		sendMessage (msg);
-
+		
 		while (true) {
 			receiveMessage();
-		
+			
 		}
 	}
-
-
+	
+	
 	public void sendMessage(Paquete p){
-
+		
 		NetworkStream stream = client.GetStream ();
 		String s = p.GetDataStream ();
 		byte[] message = GetBytes (s);
 		stream.Write (message, 0,message.Length);
-
-
+		
+		
 	}
 	public void closeConnection(){
 		client.GetStream ().Close ();
 		client.Close ();
-
-	
+		
+		
 	}
-
+	
 	public void receiveMessage(){
 		Debug.Log ("TCP: En handler del Cliente");
 		NetworkStream stream = client.GetStream ();
@@ -75,13 +75,20 @@ public class TCPClient{
 			GameController.controller.opponentReady=true;
 			
 		} else if (accion == Paquete.Identificador.moverAbajo) {
+			//mover el server abajo
+			GameController.controller.ship1.rDown = true;
 			
 		} else if (accion == Paquete.Identificador.moverArriba) {
-			
+			//mover el server arriba
+			GameController.controller.ship1.rUp = true;
 			
 		} else if (accion == Paquete.Identificador.moverIzquierda) {
+			//mover el server izquierda
+			GameController.controller.ship1.rLeft = true;
 			
 		} else if (accion == Paquete.Identificador.moverDerecha) {
+			//mover el server derecha
+			GameController.controller.ship1.rRight = true;
 			
 		} else if (accion == Paquete.Identificador.disparar) {
 			
@@ -91,7 +98,7 @@ public class TCPClient{
 			Debug.Log ("TCP: Ya me autorizaron :)");
 			GameController.controller.connected = true;
 		}
-
+		
 	}
 	/*-------------------------------------FIN AREA SERVER------------------------------------------------------*/
 	// Helper Methods
