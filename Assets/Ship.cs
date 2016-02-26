@@ -9,7 +9,7 @@ public class Ship : MonoBehaviour {
 	public GameObject bullet;
 	public int player;
 	public KeyCode moveUp,moveDown,moveLeft,moveRight,fireBtn;
-	public bool rLeft, rRight, rUp, rDown;
+	public bool rLeft, rRight, rUp, rDown,fireB;
 	
 	// Use this for initialization
 	void Start () {
@@ -18,7 +18,7 @@ public class Ship : MonoBehaviour {
 		rRight = false;
 		rUp = false;
 		rDown = false;
-
+		fireB = false;
 
 
 
@@ -74,17 +74,21 @@ public class Ship : MonoBehaviour {
 				this.rotateLeft_2();
 				rLeft = false;
 			}
-			if(rRight){
+			else if(rRight){
 				this.rotateRight_2();
 				rRight = false;
 			}
-			if(rUp){
+			else if(rUp){
 				this.rotateFront_2();
 				rUp = false;
 			}
-			if(rDown){
+			else if(rDown){
 				this.rotateDown_2();
 				rDown = false;
+			}
+			else if(fireB){
+				this.fire_2();
+				fireB = false;
 			}
 			
 
@@ -271,6 +275,7 @@ public class Ship : MonoBehaviour {
 	}
 	
 	public void rotateRight_2(){
+
 		if (!facing.Equals("right") && !facing.Equals("left")) {
 			if(facing.Equals("front")){
 				
@@ -288,6 +293,7 @@ public class Ship : MonoBehaviour {
 	}
 	
 	public void rotateFront_2(){
+
 		if (!facing.Equals("front") && !facing.Equals("down")) {
 			if(facing.Equals("right")){
 				
@@ -323,9 +329,31 @@ public class Ship : MonoBehaviour {
 		GameObject barrel = getChildGameObject (gameObject, "Barrel");
 		GameObject go = (GameObject)Instantiate(bullet, barrel.transform.position, barrel.transform.rotation);
 		go.GetComponent<BulletObject> ().direction = facing;
+
 		
+
 		//Mandamos Mensaje (Decidir si antes de pintar o despues)
+		Paquete p = new Paquete ();
+		p.identificadorPaquete = Paquete.Identificador.disparar;
 		
+		if (GameController.controller.isServer) {
+			//es server
+			//escribir al cliente que 
+			GameController.controller.tcpServer.sendMessage(p);
+			
+		} else {
+			//es cliente
+			//escribir al server que roto
+			GameController.controller.tcpClient.sendMessage(p);
+		}
+
+	}
+
+	public void fire_2(){
+		GameObject barrel = getChildGameObject (gameObject, "Barrel");
+		GameObject go = (GameObject)Instantiate(bullet, barrel.transform.position, barrel.transform.rotation);
+		go.GetComponent<BulletObject> ().direction = facing;	
+	
 	}
 	public void stopMoving(){
 		Vector3 v1 = rigidbody2D.velocity;

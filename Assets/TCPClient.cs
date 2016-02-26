@@ -52,7 +52,7 @@ public class TCPClient{
 		String s = p.GetDataStream ();
 		byte[] message = GetBytes (s);
 		stream.Write (message, 0,message.Length);
-		
+		Debug.Log("TCP Client: Enviado mensaje!");
 		
 	}
 	public void closeConnection(){
@@ -69,7 +69,7 @@ public class TCPClient{
 		stream.Read (bb,0,bb.Length);
 		string s = GetString (bb);
 		Paquete p = new Paquete(s);
-		Debug.Log ("Client: el xml tcp:" + p.GetDataStream ()); 
+		Debug.Log ("TCP Client: El XML recibido" + p.GetDataStream ()); 
 		Paquete.Identificador accion = p.identificadorPaquete;
 		if (accion == Paquete.Identificador.jugadorListo) {
 			GameController.controller.opponentReady=true;
