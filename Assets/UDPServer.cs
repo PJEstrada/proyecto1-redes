@@ -161,6 +161,10 @@ public class UDPServer {
 
 
 			}
+			else if(receivedData.identificadorPaquete == Paquete.Identificador.desconectar){
+				GameController.controller.mm2 = true;
+
+			}
 
 			
 			// Volvemos a escuchar conexiones nuevamente...

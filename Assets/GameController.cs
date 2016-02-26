@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour {
 	public UDPClient clientUDP;//Client 
 	public UDPServer serverUDP;
 	public Text messages; //Mensajes de conexion en pantalla de inicion
- 
+	public bool mm2;
 	/*--------------------Variables del juego-----------------------*/
 	public GameObject player1;
 	public GameObject player2;
@@ -75,32 +75,57 @@ public class GameController : MonoBehaviour {
 	
 	public void MainMenu(){
 		
-		gameOn = false;
-		connected = false;
+		GameController.controller.gameOn = false;
+		GameController.controller.connected = false;
 		//Cerramos conexiones con cliente y servidor
 		if (this.isServer == true) {
-			GameController.controller.serverUDP.serverSocket.Close();
-		
+			Paquete p = new Paquete();
+			p.identificadorPaquete = Paquete.Identificador.desconectar;
+			GameController.controller.tcpServer.sendMessage(p);
+			//GameController.controller.serverUDP.serverSocket.Close();
+			
 		} 
 		else {
-			GameController.controller.clientUDP.clientSocket.Close();
+			Paquete p = new Paquete();
+			p.identificadorPaquete = Paquete.Identificador.desconectar;
+			GameController.controller.tcpClient.sendMessage(p);
+			//GameController.controller.clientUDP.clientSocket.Close();
 		
 		}
 		//... To Do
 		
 		Application.LoadLevel (0);
 	}
+	public void MainMenu2(){
+		
+		gameOn = false;
+		connected = false;
+		if (this.isServer == true) {
+
+			GameController.controller.serverUDP.serverSocket.Close();
+
+			
+		} 
+		else {
+
+			GameController.controller.clientUDP.clientSocket.Close();
+			
+		}
+		Application.LoadLevel (0);
+	}
 
 	public void playerWins(int num){
+		GameController.controller.imReady = false;
+		GameController.controller.opponentReady = false;
 		if (gameOn) {
 			controller.gameOn = false;
 			if(num==1){
 				GameObject.Find("Player1").GetComponent<Ship>().stopMoving();
-
+				GameObject.Find("Player1").GetComponent<Ship>().stopMoving();
 			}
 			else{
 				GameObject.Find("Player2").GetComponent<Ship>().stopMoving();
-
+				GameObject.Find("Player1").GetComponent<Ship>().stopMoving();
 			}
 
 
@@ -127,6 +152,10 @@ public class GameController : MonoBehaviour {
 			GameController.controller.imReady =false;
 			GameController.controller.opponentReady = false;
 
+		}
+		if (mm2 == true) {
+			MainMenu2();
+			mm2 =false;
 		}
 
 	}

@@ -11,7 +11,10 @@ public class MainGame : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		GameController.controller.connected=false;
-		
+		ready.GetComponent<Button> ().enabled = true;
+		ready.GetComponent<Image> ().enabled = true;
+		ready.GetComponent<Image> ().color = Color.yellow;
+		ready.SetActive (true);
 		GameController.controller.listoText = listoText;
 		GameController.controller.salir = salir;
 		GameController.controller.ready = ready;
@@ -25,7 +28,28 @@ public class MainGame : MonoBehaviour {
 	void Update () {
 		
 	}
+
+	public void mainMenu(){
+		GameController.controller.MainMenu ();
 	
+	}
+
+	public void playAgain(){
+		GameController.controller.connected=false;
+		ready.GetComponent<Button> ().enabled = true;
+		ready.GetComponent<Image> ().enabled = true;
+		ready.GetComponent<Image> ().color = Color.yellow;
+		ready.SetActive (true);
+		GameController.controller.listoText = listoText;
+		GameController.controller.salir = salir;
+		GameController.controller.ready = ready;
+		GameController.controller.jugarDeNuevo = jugarDeNuevo;
+		
+		salir.SetActive (false);
+		jugarDeNuevo.SetActive (false);
+
+	
+	}
 	public void startGame(){
 		Debug.Log ("Inciando Juego");
 		esperandoOponente.SetActive (false); 
@@ -40,7 +64,7 @@ public class MainGame : MonoBehaviour {
 		GameController.controller.player2.GetComponent<Ship> ().startMoving ();
 		ready.GetComponent<Button> ().enabled = false;
 		ready.GetComponent<Image> ().enabled = false;
-		
+
 	}
 	public void playerReady(){
 		GameController.controller.player1 = GameObject.Find ("Player1");
@@ -49,6 +73,7 @@ public class MainGame : MonoBehaviour {
 		GameController.controller.ship2 = GameController.controller.player2.GetComponent<Ship> ();
 		GameController.controller.ship1.player = 1;
 		GameController.controller.ship2.player = 2;
+		GameController.controller.ship2= GameController.controller.player2.GetComponent<Ship> ();
 		//Eliminando texto 
 		GameController.controller.mainGame = GameObject.Find ("bg").GetComponent<MainGame> ();
 		GameObject temp = GameObject.Find ("Win");
@@ -59,8 +84,6 @@ public class MainGame : MonoBehaviour {
 		salir.SetActive (false);
 		jugarDeNuevo.SetActive (false);
 		//Reactivando Naves
-		
-		
 		GameController.controller.player1.GetComponent<SpriteRenderer> ().enabled = true;
 		GameController.controller.player2.GetComponent<SpriteRenderer> ().enabled = true;
 		

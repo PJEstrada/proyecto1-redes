@@ -435,11 +435,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onGame: 0
   isServer: 0
-  tcpServer: {fileID: 0}
-  tcpClient: {fileID: 0}
   messages: {fileID: 1762627203}
+  mm2: 0
   player1: {fileID: 0}
   player2: {fileID: 0}
+  ship1: {fileID: 0}
+  ship2: {fileID: 0}
   timeBetweenSpawn: .0500000007
   borderLeft: {fileID: 0}
   borderRight: {fileID: 0}

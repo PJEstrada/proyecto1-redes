@@ -74,11 +74,17 @@ public class TCPServer  {
 				
 			} else if (accion == Paquete.Identificador.jugadorListo) {
 				GameController.controller.opponentReady=true;
+
 				
 			} else if (accion == Paquete.Identificador.moverAbajo) {
+<<<<<<< HEAD
 				//mover abajo el cliente
 				GameController.controller.ship2.rDown = true;
 				
+=======
+
+
+>>>>>>> 568f85749691f40528f876d96db2e7e6e40022c1
 			} else if (accion == Paquete.Identificador.moverArriba) {
 				//mover arriba el cliente
 				GameController.controller.ship2.rUp = true;
@@ -107,7 +113,16 @@ public class TCPServer  {
 		//mClient.Close ();
 		
 	}
+<<<<<<< HEAD
 	
+=======
+
+	public void CloseConnection(){
+
+		mClient.Close ();	
+	
+	}
+>>>>>>> 568f85749691f40528f876d96db2e7e6e40022c1
 	public void sendMessage(Paquete p){
 		
 		
