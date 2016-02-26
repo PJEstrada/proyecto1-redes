@@ -2,13 +2,13 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Ship.cs">
     <Files>
-      <File FileName="Assets\UDPServer.cs" Line="174" Column="24" />
-      <File FileName="Assets\Ship.cs" Line="71" Column="5" />
-      <File FileName="Assets\Paquete.cs" Line="32" Column="19" />
-      <File FileName="Assets\UDPClient.cs" Line="109" Column="7" />
+      <File FileName="Assets\TCPServer.cs" Line="105" Column="48" />
+      <File FileName="Assets\Ship.cs" Line="97" Column="4" />
+      <File FileName="Assets\UDPServer.cs" Line="1" Column="1" />
+      <File FileName="Assets\Paquete.cs" Line="1" Column="1" />
+      <File FileName="Assets\UDPClient.cs" Line="1" Column="1" />
       <File FileName="Assets\WelcomeScreen.cs" Line="1" Column="1" />
-      <File FileName="Assets\TCPClient.cs" Line="27" Column="26" />
-      <File FileName="Assets\TCPServer.cs" Line="7" Column="14" />
+      <File FileName="Assets\TCPClient.cs" Line="1" Column="1" />
       <File FileName="Assets\MainGame.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>

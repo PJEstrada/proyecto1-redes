@@ -458,7 +458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   facing: 
   timeBetweenMove: .5
-  speed: 100
+  speed: 150
   bullet: {fileID: 193798, guid: d3cbf0107e36a3540bcdd796c8e6ed99, type: 2}
   player: 2
   moveUp: 273
@@ -1435,14 +1435,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   facing: 
   timeBetweenMove: .5
-  speed: 100
+  speed: 150
   bullet: {fileID: 193798, guid: d3cbf0107e36a3540bcdd796c8e6ed99, type: 2}
   player: 1
   moveUp: 273
   moveDown: 274
   moveLeft: 276
   moveRight: 275
-  fireBtn: 109
+  fireBtn: 122
   rLeft: 0
   rRight: 0
   rUp: 0
