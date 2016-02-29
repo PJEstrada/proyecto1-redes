@@ -17,7 +17,7 @@ public class TCPServer  {
 	ArrayList listaClientes;
 	public int entrantPackagesCounter;
 	public int sendingPackagesCounter;
-	
+	public bool connect;
 	// Use this for initialization
 	void Start () {
 		
@@ -56,7 +56,7 @@ public class TCPServer  {
 		//NetworkStream stream = mClient.GetStream ();
 		//byte[] message = new byte[1024];
 		Debug.Log ("antes TCP Server:");
-		while (true) {
+		while (connect) {
 			NetworkStream stream = mClient.GetStream ();
 			byte[] message = new byte[1024];
 			Debug.Log ("TCP Server: Esperando Msj...");
@@ -128,7 +128,7 @@ public class TCPServer  {
 	public void CloseConnection(){
 		mClient.GetStream ().Close ();
 		mClient.Close ();	
-		
+		connect = false;
 	}
 	public void sendMessage(Paquete p){
 		
