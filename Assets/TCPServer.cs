@@ -110,7 +110,10 @@ public class TCPServer  {
 				
 				
 			}		
-			
+			else if(accion == Paquete.Identificador.desconectar){
+				GameController.controller.mm2 = true;
+				
+			}			
 			
 		}
 		

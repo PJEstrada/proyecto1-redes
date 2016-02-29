@@ -208,11 +208,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: .0299999993
+  near clip plane: .560000002
   far clip plane: 1000
   field of view: 24.7000008
   orthographic: 1
-  orthographic size: 164.394867
+  orthographic size: 195
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -470,6 +470,7 @@ MonoBehaviour:
   rRight: 0
   rUp: 0
   rDown: 0
+  fireB: 0
 --- !u!61 &729120915
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1447,6 +1448,7 @@ MonoBehaviour:
   rRight: 0
   rUp: 0
   rDown: 0
+  fireB: 0
 --- !u!61 &1599723476
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1715,6 +1717,8 @@ MonoBehaviour:
   imReady: 0
   opponentReady: 0
   mainGame: {fileID: 0}
+  p1Wins: 0
+  p2Wins: 0
 --- !u!1 &2096115064
 GameObject:
   m_ObjectHideFlags: 0

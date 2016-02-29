@@ -30,6 +30,8 @@ public class GameController : MonoBehaviour {
 	public GameObject ready;
 	public Boolean imReady,opponentReady;
 	public MainGame mainGame;
+	public bool p1Wins,p2Wins;
+
 	void Awake(){
 		Debug.Log ("NUEVO AWAKE");
 		if (controller == null) {
@@ -46,6 +48,8 @@ public class GameController : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
+		p1Wins = false;
+		p2Wins = false;
 		//---------------------Prueba de XML
 		/*Paquete p = new Paquete ();
 		p.jugador = 6;
@@ -120,8 +124,9 @@ public class GameController : MonoBehaviour {
 		if (gameOn) {
 			controller.gameOn = false;
 			if(num==1){
+
 				GameObject.Find("Player1").GetComponent<Ship>().stopMoving();
-				GameObject.Find("Player1").GetComponent<Ship>().stopMoving();
+				GameObject.Find("Player2").GetComponent<Ship>().stopMoving();
 			}
 			else{
 				GameObject.Find("Player2").GetComponent<Ship>().stopMoving();
@@ -137,9 +142,39 @@ public class GameController : MonoBehaviour {
 			salir.SetActive (true);		
 		
 		}
-
+		Paquete p = new Paquete ();
+		p.identificadorPaquete = Paquete.Identificador.jugadorGana;
+		p.jugador = num;
+		GameController.controller.tcpServer.sendMessage (p);
 	}
+	public void playerWins2(int num){
+		GameController.controller.imReady = false;
+		GameController.controller.opponentReady = false;
+		if (gameOn) {
+			controller.gameOn = false;
+			if(num==1){
+				GameObject.Find("Player1").GetComponent<Ship>().stopMoving();
+				GameObject.Find("Player2").GetComponent<Ship>().stopMoving();
+				GameController.controller.ship2.gameObject.GetComponent<SpriteRenderer> ().enabled = false;
+			}
+			else{
+				GameObject.Find("Player2").GetComponent<Ship>().stopMoving();
+				GameObject.Find("Player1").GetComponent<Ship>().stopMoving();
+				GameController.controller.ship1.gameObject.GetComponent<SpriteRenderer> ().enabled = false;
+			}
+			
+			
+			GameObject temp =GameObject.Find 	("Win");
+			Text text = temp.GetComponent<Text> ();
+			text.text = "Jugador "+num+" Gano!";
+			text.enabled = true;
+			jugarDeNuevo.SetActive (true);
+			salir.SetActive (true);		
+			
+		}
 
+		
+	}
 	void Update () {
 		if (GameController.controller.connected == true) {
 			Application.LoadLevel (1);
@@ -157,7 +192,15 @@ public class GameController : MonoBehaviour {
 			MainMenu2();
 			mm2 =false;
 		}
-
+		if (p1Wins == true) {
+			GameController.controller.playerWins2(1);
+			p1Wins = false;
+		}
+		if (p2Wins == true) {
+			GameController.controller.playerWins2(2);
+			p2Wins = false;
+			
+		}
 	}
 
 	

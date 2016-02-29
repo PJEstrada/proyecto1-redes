@@ -54,8 +54,8 @@ public class Ship : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (GameController.controller.gameOn==true) {
-			if((this.player==1 && GameController.controller.isServer==true) || (this.player==2 && GameController.controller.isServer==false)){
-				
+			//MoveShip();
+			if((this.player==1 && GameController.controller.isServer==true) || (this.player==2 && GameController.controller.isServer==false)){			
 				if (Input.GetKeyDown (moveLeft)) {
 					rotateLeft ();
 					
@@ -70,6 +70,11 @@ public class Ship : MonoBehaviour {
 				}	
 				
 			}
+			/*else{
+				syncedMovement();
+
+			}*/
+
 			if(rLeft){
 				this.rotateLeft_2();
 				rLeft = false;
@@ -101,7 +106,29 @@ public class Ship : MonoBehaviour {
 		
 		
 	}
+	public void syncedMovement(){
+		if (GameController.controller.isServer == true) {
+			GameController.controller.serverUDP.syncTime += Time.deltaTime;
+
+			gameObject.rigidbody2D.position = Vector3.Lerp(GameController.controller.serverUDP.syncStartPosition, GameController.controller.serverUDP.syncEndPosition
+			                                  , GameController.controller.serverUDP.syncTime / GameController.controller.serverUDP.syncDelay);		
+		
+		} 
+		else {
+			GameController.controller.clientUDP.syncTime += Time.deltaTime;
+
+			gameObject.rigidbody2D.position = Vector3.Lerp(GameController.controller.clientUDP.syncStartPosition, GameController.controller.clientUDP.syncEndPosition
+			                                  , GameController.controller.clientUDP.syncTime / GameController.controller.clientUDP.syncDelay);
+		}		
+
+	
+	}
+	public void correctPosition(){
+		
+	
+	}
 	void MoveShip(){
+		//sendPosition ();
 		if (GameController.controller.gameOn==true) {
 			if (facing.Equals("front")) {
 				Vector3 v1 = rigidbody2D.velocity;
@@ -365,24 +392,28 @@ public class Ship : MonoBehaviour {
 	//Choque de la nave
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		this.gameObject.GetComponent<SpriteRenderer> ().enabled = false;
+		if (GameController.controller.isServer == true) {
+			this.gameObject.GetComponent<SpriteRenderer> ().enabled = false;
+			
+			if (this.player == 1) {
+				GameController.controller.playerWins (2);
+			} else {
+				GameController.controller.playerWins (1);
+			}		
 		
-		if (this.player == 1) {
-			GameController.controller.playerWins (2);
-		} else {
-			GameController.controller.playerWins (1);
 		}
+
 	}
 	
 	
 	void OnTriggerStay2D(Collider2D other)
 	{
-		Debug.Log("Still colliding with trigger object " + other.name);
+		//Debug.Log("Still colliding with trigger object " + other.name);
 	}
 	
 	void OnTriggerExit2D(Collider2D other)
 	{
-		Debug.Log(gameObject.name + " and trigger object " + other.name + " are no longer colliding");
+		//Debug.Log(gameObject.name + " and trigger object " + other.name + " are no longer colliding");
 	}
 	
 	static public GameObject getChildGameObject(GameObject fromGameObject, string withName) {
