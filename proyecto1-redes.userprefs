@@ -1,17 +1,10 @@
 ﻿<Properties>
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\GameController.cs">
-    <Files>
-      <File FileName="Assets\Ship.cs" Line="1" Column="1" />
-      <File FileName="Assets\GameController.cs" Line="148" Column="55" />
-=======
-  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\UDPServer.cs">
     <Files>
-      <File FileName="Assets\UDPServer.cs" Line="188" Column="21" />
-      <File FileName="Assets\UDPClient.cs" Line="135" Column="73" />
->>>>>>> 863116c0cae306b0f046960500630d6055be330b
+      <File FileName="Assets\Ship.cs" Line="1" Column="1" />
+      <File FileName="Assets\UDPServer.cs" Line="183" Column="6" />
+      <File FileName="Assets\GameController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
