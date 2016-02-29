@@ -128,6 +128,7 @@ public class Ship : MonoBehaviour {
 	
 	}
 	void MoveShip(){
+
 		sendPosition ();
 		if (GameController.controller.gameOn==true) {
 			if (facing.Equals("front")) {

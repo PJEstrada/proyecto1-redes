@@ -113,6 +113,8 @@ public class UDPClient {
 
 			if(receivedData.identificadorPaquete == Paquete.Identificador.nuevaPos){
 
+
+
 				if(GameController.controller.player1.transform.position.x >= receivedData.x +60.0 || GameController.controller.player1.transform.position.y >= receivedData.y +60.0){
 					//Corregimos la posicion
 					Debug.Log ("UDP CLIENT: DESFASE DE SERVER!! Corrigiendo...");
@@ -147,8 +149,6 @@ public class UDPClient {
 				Debug.Log ("UDP CLIENT: Recibi correccion de pos del server!! Corrigiendo...");
 				float newx = receivedData.x;
 				float newy = receivedData.y;
-				GameController.controller.ship2.transform.position = new Vector3(newx,newy,0);
-
 			}
 
 

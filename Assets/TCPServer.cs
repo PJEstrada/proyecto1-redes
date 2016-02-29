@@ -58,6 +58,7 @@ public class TCPServer  {
 		//NetworkStream stream = mClient.GetStream ();
 		//byte[] message = new byte[1024];
 		Debug.Log ("antes TCP Server:");
+
 		while (connect) {
 			NetworkStream stream = mClient.GetStream ();
 			byte[] message = new byte[1024];
