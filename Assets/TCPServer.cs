@@ -17,7 +17,8 @@ public class TCPServer  {
 	ArrayList listaClientes;
 	public int entrantPackagesCounter;
 	public int sendingPackagesCounter;
-	
+	public bool connect;
+	TcpListener tcpListener;
 	// Use this for initialization
 	void Start () {
 		
@@ -29,6 +30,7 @@ public class TCPServer  {
 	}
 	
 	public TCPServer(){
+		connect = true;
 		IPEndPoint clients = new IPEndPoint(IPAddress.Any, 0);
 		EndPoint epSender = (EndPoint)clients;
 		Thread tcpServerRunThread = new Thread(new ThreadStart (TcpServerRun));
@@ -38,7 +40,7 @@ public class TCPServer  {
 		
 	}
 	public void TcpServerRun(){
-		TcpListener tcpListener = new TcpListener (IPAddress.Any, 30000);
+	    tcpListener = new TcpListener (IPAddress.Any, 30000);
 		tcpListener.Start ();
 		
 		while(true){
@@ -56,7 +58,8 @@ public class TCPServer  {
 		//NetworkStream stream = mClient.GetStream ();
 		//byte[] message = new byte[1024];
 		Debug.Log ("antes TCP Server:");
-		while (true) {
+
+		while (connect) {
 			NetworkStream stream = mClient.GetStream ();
 			byte[] message = new byte[1024];
 			Debug.Log ("TCP Server: Esperando Msj...");
@@ -126,9 +129,10 @@ public class TCPServer  {
 
 
 	public void CloseConnection(){
-
+		mClient.GetStream ().Close ();
 		mClient.Close ();	
-	
+		tcpListener.Stop ();
+		connect = false;
 	}
 	public void sendMessage(Paquete p){
 		

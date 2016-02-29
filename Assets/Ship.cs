@@ -128,7 +128,8 @@ public class Ship : MonoBehaviour {
 	
 	}
 	void MoveShip(){
-		//sendPosition ();
+
+		sendPosition ();
 		if (GameController.controller.gameOn==true) {
 			if (facing.Equals("front")) {
 				Vector3 v1 = rigidbody2D.velocity;

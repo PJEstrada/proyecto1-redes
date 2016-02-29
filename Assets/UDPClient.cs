@@ -57,6 +57,7 @@ public class UDPClient {
 		}
 	
 	}
+
 	public void sendMessage(Paquete p){
 		byte[] data	;
 		p.id = this.sendingPackagesCounter;
@@ -111,18 +112,43 @@ public class UDPClient {
 			//Actualizamos el Mundo del Juego
 
 			if(receivedData.identificadorPaquete == Paquete.Identificador.nuevaPos){
-				//Actualizamos tiempos y transforms para prediccion e interpolacion
-				GameController.controller.player1.transform.position = new Vector3(receivedData.x,receivedData.y,0);
-				syncVelocity = GameController.controller.player1.rigidbody2D.velocity;
-
-				syncTime = 0f;
-				syncDelay = Time.time -lastSynchronizationTime;
-				lastSynchronizationTime = Time.time;
-				
-				syncEndPosition = syncPosition+syncVelocity*syncDelay;
-				syncStartPosition = new Vector3(receivedData.x,receivedData.y,0);
 
 
+
+				if(GameController.controller.player1.transform.position.x >= receivedData.x +60.0 || GameController.controller.player1.transform.position.y >= receivedData.y +60.0){
+					//Corregimos la posicion
+					Debug.Log ("UDP CLIENT: DESFASE DE SERVER!! Corrigiendo...");
+					float newx = receivedData.x;
+					float newy = receivedData.y;
+					GameController.controller.ship1.transform.position = new Vector3(newx,newy,0);
+					
+					
+				}
+				else{
+					/*//Actualizamos tiempos y transforms para prediccion e interpolacion
+					GameController.controller.player1.transform.position = new Vector3(receivedData.x,receivedData.y,0);
+					syncVelocity = GameController.controller.player1.rigidbody2D.velocity;
+					
+					syncTime = 0f;
+					syncDelay = Time.time -lastSynchronizationTime;
+					lastSynchronizationTime = Time.time;
+					
+					syncEndPosition = syncPosition+syncVelocity*syncDelay;
+					syncStartPosition = new Vector3(receivedData.x,receivedData.y,0);*/
+
+				}
+
+
+
+
+
+
+			}
+			else if (receivedData.identificadorPaquete == Paquete.Identificador.corregirPos){
+				//Corregimos la posicion
+				Debug.Log ("UDP CLIENT: Recibi correccion de pos del server!! Corrigiendo...");
+				float newx = receivedData.x;
+				float newy = receivedData.y;
 			}
 
 

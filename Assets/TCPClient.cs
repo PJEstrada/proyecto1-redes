@@ -9,8 +9,9 @@ using System;
 
 public class TCPClient{
 	
-	TcpClient client;
+	public TcpClient client;
 	static string ip;
+	bool connect;
 	// Use this for initialization
 	void Start () {
 		
@@ -22,6 +23,7 @@ public class TCPClient{
 	}
 	
 	public TCPClient(){
+		connect = true;
 		client = new TcpClient ();
 		//client.Connect(IPAddress.Parse(WelcomeScreen.ipInput.text.ToString()), 30000);
 		Thread mThread = new Thread(new ThreadStart(ConnectAsClient));
@@ -38,8 +40,8 @@ public class TCPClient{
 		Paquete msg = new Paquete ();
 		msg.identificadorPaquete = Paquete.Identificador.conectar;
 		sendMessage (msg);
-		
-		while (true) {
+
+		while (connect) {
 			receiveMessage();
 			
 		}
@@ -55,10 +57,10 @@ public class TCPClient{
 		Debug.Log("TCP Client: Enviado mensaje!");
 		
 	}
-	public void closeConnection(){
+	public void CloseConnection(){
 		client.GetStream ().Close ();
 		client.Close ();
-		
+		connect = false;
 		
 	}
 	
