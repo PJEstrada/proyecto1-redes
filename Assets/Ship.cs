@@ -53,9 +53,9 @@ public class Ship : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
-		if (GameController.controller.gameOn==true) {
+		if (GameController.controller.gameOn == true) {
 			//MoveShip();
-			if((this.player==1 && GameController.controller.isServer==true) || (this.player==2 && GameController.controller.isServer==false)){			
+			if ((this.player == 1 && GameController.controller.isServer == true) || (this.player == 2 && GameController.controller.isServer == false)) {			
 				if (Input.GetKeyDown (moveLeft)) {
 					rotateLeft ();
 					
@@ -75,24 +75,20 @@ public class Ship : MonoBehaviour {
 
 			}*/
 
-			if(rLeft){
-				this.rotateLeft_2();
+			if (rLeft) {
+				this.rotateLeft_2 ();
 				rLeft = false;
-			}
-			else if(rRight){
-				this.rotateRight_2();
+			} else if (rRight) {
+				this.rotateRight_2 ();
 				rRight = false;
-			}
-			else if(rUp){
-				this.rotateFront_2();
+			} else if (rUp) {
+				this.rotateFront_2 ();
 				rUp = false;
-			}
-			else if(rDown){
-				this.rotateDown_2();
+			} else if (rDown) {
+				this.rotateDown_2 ();
 				rDown = false;
-			}
-			else if(fireB){
-				this.fire_2();
+			} else if (fireB) {
+				this.fire_2 ();
 				fireB = false;
 			}
 			
@@ -100,12 +96,11 @@ public class Ship : MonoBehaviour {
 			/*----------------------------*/
 	
 			
-			
+
 		}
 		
-		
-		
 	}
+
 	public void syncedMovement(){
 		if (GameController.controller.isServer == true) {
 			GameController.controller.serverUDP.syncTime += Time.deltaTime;
@@ -123,6 +118,7 @@ public class Ship : MonoBehaviour {
 
 	
 	}
+
 	public void correctPosition(){
 		
 	
