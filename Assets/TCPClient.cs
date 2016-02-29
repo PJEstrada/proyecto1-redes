@@ -55,7 +55,7 @@ public class TCPClient{
 		Debug.Log("TCP Client: Enviado mensaje!");
 		
 	}
-	public void closeConnection(){
+	public void CloseConnection(){
 		client.GetStream ().Close ();
 		client.Close ();
 		

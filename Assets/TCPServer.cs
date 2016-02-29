@@ -126,9 +126,9 @@ public class TCPServer  {
 
 
 	public void CloseConnection(){
-
+		mClient.GetStream ().Close ();
 		mClient.Close ();	
-	
+		
 	}
 	public void sendMessage(Paquete p){
 		
