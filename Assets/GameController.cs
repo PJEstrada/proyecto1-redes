@@ -85,18 +85,21 @@ public class GameController : MonoBehaviour {
 		if (this.isServer == true) {
 			Paquete p = new Paquete();
 			p.identificadorPaquete = Paquete.Identificador.desconectar;
+			GameController.controller.serverUDP.serverSocket.Close();
 			GameController.controller.tcpServer.sendMessage(p);
-			//GameController.controller.serverUDP.serverSocket.Close();
+			GameController.controller.tcpServer.CloseConnection();
 			
 		} 
 		else {
 			Paquete p = new Paquete();
 			p.identificadorPaquete = Paquete.Identificador.desconectar;
+			GameController.controller.clientUDP.clientSocket.Close();
 			GameController.controller.tcpClient.sendMessage(p);
-			//GameController.controller.clientUDP.clientSocket.Close();
+			GameController.controller.tcpClient.CloseConnection();
+
 		
 		}
-		//... To Do
+
 		
 		Application.LoadLevel (0);
 	}
@@ -107,13 +110,13 @@ public class GameController : MonoBehaviour {
 		if (this.isServer == true) {
 
 			GameController.controller.serverUDP.serverSocket.Close();
-
+			GameController.controller.tcpServer.CloseConnection();
 			
 		} 
 		else {
 
 			GameController.controller.clientUDP.clientSocket.Close();
-			
+			GameController.controller.tcpClient.CloseConnection();
 		}
 		Application.LoadLevel (0);
 	}
