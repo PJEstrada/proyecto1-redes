@@ -72,7 +72,7 @@ public class TCPClient{
 		Debug.Log ("TCP Client: El XML recibido" + p.GetDataStream ()); 
 		Paquete.Identificador accion = p.identificadorPaquete;
 		if (accion == Paquete.Identificador.jugadorListo) {
-			GameController.controller.opponentReady=true;
+			GameController.controller.opponentReady = true;
 			
 		} else if (accion == Paquete.Identificador.moverAbajo) {
 			//mover el server abajo
@@ -97,7 +97,20 @@ public class TCPClient{
 		} else if (accion == Paquete.Identificador.accesoAutorizado) {
 			Debug.Log ("TCP: Ya me autorizaron :)");
 			GameController.controller.connected = true;
-		}
+		} else if (accion == Paquete.Identificador.jugadorGana) {
+			if (p.jugador == 1) {
+				GameController.controller.p1Wins = true;
+
+			} else if (p.jugador == 2) {
+				GameController.controller.p2Wins = true;
+
+			}
+
+		
+		} else if (accion == Paquete.Identificador.desconectar) {
+			GameController.controller.mm2 = true;
+			
+		} 
 
 		
 	}

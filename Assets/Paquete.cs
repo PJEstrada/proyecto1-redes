@@ -25,6 +25,8 @@ public class Paquete {
 		colision,
 		desconectar,
 		nuevaPos,
+		jugadorGana,
+		corregirPos,
 		Null
 	}
 	public Identificador identificadorPaquete;
@@ -88,3 +90,4 @@ public class Paquete {
 	}
 
 }
+

@@ -28,7 +28,13 @@ public class UDPServer {
 	// Status delegate
 	delegate void UpdateStatusDelegate(string status);
 		//UpdateStatusDelegate updateStatusDelegate = null;
-
+	public  float lastSynchronizationTime = 0f;
+	public float syncDelay = 0f;
+	public  float syncTime = 0f;
+	public  Vector3 syncStartPosition = Vector3.zero;
+	public  Vector3 syncEndPosition = Vector3.zero;
+	Vector3 syncPosition = Vector3.zero;
+	Vector3 syncVelocity = Vector3.zero;
 	public UDPServer()
 	{
 		try
@@ -86,7 +92,7 @@ public class UDPServer {
 	{
 		try
 		{
-			Debug.Log("Enviando data : ");
+			Debug.Log("UDP Server: Enviando data : ");
 			serverSocket.EndSend(asyncResult);
 
 		}
@@ -101,7 +107,7 @@ public class UDPServer {
 	{
 		try
 		{
-			Debug.Log("Recibiendo data : ");
+			Debug.Log("UDP Server: Recibiendo data : ");
 			byte[] data	;
 			// Paquete para almacenar la data recibida
 			Paquete receivedData = new Paquete(GetString(this.dataStream));
@@ -111,7 +117,7 @@ public class UDPServer {
 			Debug.Log("UDP Server: Received data num : "+receivedData.id);
 			Debug.Log ("UDP Server: Server Counter: "+this.entrantPackagesCounter);
 			if(receivedData.id<this.entrantPackagesCounter){
-				Debug.Log("Paquete Descartado : ");
+				Debug.Log("UDP Server: Paquete Descartado : ");
 				return; //Descartamos el paquete
 
 			}
@@ -163,18 +169,28 @@ public class UDPServer {
 
 
 			}
-			else if(receivedData.identificadorPaquete == Paquete.Identificador.desconectar){
-				GameController.controller.mm2 = true;
 
-			}
 			else if(receivedData.identificadorPaquete == Paquete.Identificador.nuevaPos){
 
 				//Verificando que la nave del cliente se encuentre en una posicion correcta
 				bool correctPosition=false;
 				//X ->   ,  Y -> 25
-				if(GameController.controller.player2.transform.position.x >= receivedData.x +5.0 ){
+				if(GameController.controller.player2.transform.position.x >= receivedData.x +60.0 || GameController.controller.player2.transform.position.y >= receivedData.y +60.0){
+					//Corregimos la posicion
+					Debug.Log ("UDP SERVER: DESFASE DE CLIENTE!! Corrigiendo...");
 
-
+				}
+				else{
+					//Actualizamos tiempos y transforms para prediccion e interpolacion
+					GameController.controller.player2.transform.position = new Vector3(receivedData.x,receivedData.y,0);
+					syncVelocity = GameController.controller.player2.rigidbody2D.velocity;
+					
+					syncTime = 0f;
+					syncDelay = Time.time -lastSynchronizationTime;
+					lastSynchronizationTime = Time.time;
+					
+					syncEndPosition = syncPosition+syncVelocity*syncDelay;
+					syncStartPosition = new Vector3(receivedData.x,receivedData.y,0);
 				}
 
 			}

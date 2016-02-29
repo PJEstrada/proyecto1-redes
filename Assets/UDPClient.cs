@@ -15,7 +15,13 @@ public class UDPClient {
 	public byte[] dataStream;
 	public int entrantPackagesCounter;
 	public int sendingPackagesCounter;
-
+	public  float lastSynchronizationTime = 0f;
+	public float syncDelay = 0f;
+	public  float syncTime = 0f;
+	public  Vector3 syncStartPosition = Vector3.zero;
+	public  Vector3 syncEndPosition = Vector3.zero;
+	Vector3 syncPosition = Vector3.zero;
+	Vector3 syncVelocity = Vector3.zero;
 	public UDPClient(string serverIP) {
 		//Paquete sendData = new Paquete ();
 		//sendData.id = 0;
@@ -63,7 +69,7 @@ public class UDPClient {
 
 	private void SendData(IAsyncResult ar)
 	{
-		Debug.Log("Enviando data : Counter Send = "+this.sendingPackagesCounter);
+		Debug.Log("UDP Client: Enviando data -Counter Send = "+this.sendingPackagesCounter);
 		try
 		{
 			clientSocket.EndSend(ar);
@@ -79,7 +85,7 @@ public class UDPClient {
 	{
 		try
 		{
-			Debug.Log("Recibiendo data : ");
+			Debug.Log("UDP Client: Recibiendo data : ");
 
 			// Recibimos toda la data
 			this.clientSocket.EndReceive(ar);
@@ -105,9 +111,17 @@ public class UDPClient {
 			//Actualizamos el Mundo del Juego
 
 			if(receivedData.identificadorPaquete == Paquete.Identificador.nuevaPos){
-				float x = receivedData.x;
-				//GameController.controller.player1.transform.x =
-				//GameController.controller.player1.transform.position.y = receivedData.y;
+				//Actualizamos tiempos y transforms para prediccion e interpolacion
+				GameController.controller.player1.transform.position = new Vector3(receivedData.x,receivedData.y,0);
+				syncVelocity = GameController.controller.player1.rigidbody2D.velocity;
+
+				syncTime = 0f;
+				syncDelay = Time.time -lastSynchronizationTime;
+				lastSynchronizationTime = Time.time;
+				
+				syncEndPosition = syncPosition+syncVelocity*syncDelay;
+				syncStartPosition = new Vector3(receivedData.x,receivedData.y,0);
+
 
 			}
 

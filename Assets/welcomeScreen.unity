@@ -455,6 +455,8 @@ MonoBehaviour:
   imReady: 0
   opponentReady: 0
   mainGame: {fileID: 0}
+  p1Wins: 0
+  p2Wins: 0
 --- !u!4 &1058341745
 Transform:
   m_ObjectHideFlags: 0
@@ -559,10 +561,10 @@ RectTransform:
   - {fileID: 1602340944}
   m_Father: {fileID: 1908099880}
   m_RootOrder: 3
-  m_AnchorMin: {x: .5, y: .5}
-  m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -448, y: 92}
-  m_SizeDelta: {x: 160, y: 27}
+  m_AnchorMin: {x: .0432966128, y: .625885963}
+  m_AnchorMax: {x: .173703387, y: .674228013}
+  m_AnchoredPosition: {x: -.5, y: 0}
+  m_SizeDelta: {x: 17, y: -3}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1325810211
 MonoBehaviour:
@@ -641,10 +643,10 @@ RectTransform:
   - {fileID: 607743788}
   m_Father: {fileID: 1908099880}
   m_RootOrder: 2
-  m_AnchorMin: {x: .5, y: .5}
-  m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 372, y: 106}
-  m_SizeDelta: {x: 289, y: 31}
+  m_AnchorMin: {x: .74134773, y: .651485443}
+  m_AnchorMax: {x: .974703491, y: .690514624}
+  m_AnchoredPosition: {x: .5, y: 1.5}
+  m_SizeDelta: {x: 2, y: 7}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1506730398
 MonoBehaviour:
@@ -960,10 +962,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1908099880}
   m_RootOrder: 4
-  m_AnchorMin: {x: .5, y: .5}
-  m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 204, y: 96.5}
-  m_SizeDelta: {x: 160, y: 36}
+  m_AnchorMin: {x: .56046629, y: .643371403}
+  m_AnchorMax: {x: .729533792, y: .690514624}
+  m_AnchoredPosition: {x: 1, y: 3.98999786}
+  m_SizeDelta: {x: 0, y: 14.4760017}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1662682860
 MonoBehaviour:
@@ -1028,10 +1030,10 @@ RectTransform:
   - {fileID: 140649107}
   m_Father: {fileID: 1908099880}
   m_RootOrder: 5
-  m_AnchorMin: {x: .5, y: .5}
-  m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 18, y: -152}
-  m_SizeDelta: {x: 413, y: 106}
+  m_AnchorMin: {x: .30400002, y: .174628675}
+  m_AnchorMax: {x: .729533792, y: .339000016}
+  m_AnchoredPosition: {x: 2, y: -2.5}
+  m_SizeDelta: {x: 11, y: 5}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1722187238
 MonoBehaviour:
