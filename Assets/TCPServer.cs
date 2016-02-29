@@ -53,14 +53,17 @@ public class TCPServer  {
 		
 		Debug.Log ("TCP: En handler del server");
 		mClient = (TcpClient)client;
-		NetworkStream stream = mClient.GetStream ();
-		byte[] message = new byte[1024];
-		Debug.Log ("antes TCPClient:");
+		//NetworkStream stream = mClient.GetStream ();
+		//byte[] message = new byte[1024];
+		Debug.Log ("antes TCP Server:");
 		while (true) {
+			NetworkStream stream = mClient.GetStream ();
+			byte[] message = new byte[1024];
+			Debug.Log ("TCP Server: Esperando Msj...");
 			stream.Read (message, 0, message.Length);
-			Debug.Log ("despues TCPClient:");
+			Debug.Log ("TCP Server: Recibido nuevo Mensaje");
 			Paquete receivedData = new Paquete (GetString (message));
-			Debug.Log ("Client: el xml tcp:" + receivedData.GetDataStream ()); 
+			Debug.Log ("TCP Server: XML recibido: " + receivedData.GetDataStream ()); 
 			Paquete.Identificador accion = receivedData.identificadorPaquete;
 			
 			if (accion == Paquete.Identificador.conectar) {
@@ -77,28 +80,40 @@ public class TCPServer  {
 
 				
 			} else if (accion == Paquete.Identificador.moverAbajo) {
+				Debug.Log ("TCP Server: Recibi mover abajo");
 				//mover abajo el cliente
 				GameController.controller.ship2.rDown = true;
 
 			} else if (accion == Paquete.Identificador.moverArriba) {
+				Debug.Log ("TCP Server: Recibi mover arriba");
 				//mover arriba el cliente
 				GameController.controller.ship2.rUp = true;
 				
 			} else if (accion == Paquete.Identificador.moverIzquierda) {
 				//mover izquierda el cliente
+				Debug.Log ("TCP Server: Recibi mover izquierda");
 				GameController.controller.ship2.rLeft = true;
 				
 			} else if (accion == Paquete.Identificador.moverDerecha) {
 				//mover derecha cliente
+				Debug.Log ("TCP Server: Recibi mover derecha");
 				GameController.controller.ship2.rRight = true;
 				
 				
 			} else if (accion == Paquete.Identificador.disparar) {
+				Debug.Log ("TCP Server: Disparar");
+				GameController.controller.ship2.fireB=true;
+				
 				
 			} else if (accion == Paquete.Identificador.colision) {
 				
+				
+				
 			}		
-			
+			else if(accion == Paquete.Identificador.desconectar){
+				GameController.controller.mm2 = true;
+				
+			}			
 			
 		}
 		

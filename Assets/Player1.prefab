@@ -54,7 +54,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   facing: 
-  shipSprite: {fileID: 0}
+  timeBetweenMove: 0
+  speed: 0
+  bullet: {fileID: 0}
+  player: 0
+  moveUp: 0
+  moveDown: 0
+  moveLeft: 0
+  moveRight: 0
+  fireBtn: 0
+  rLeft: 0
+  rRight: 0
+  rUp: 0
+  rDown: 0
+  fireB: 0
 --- !u!212 &21228196
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -75,7 +88,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f8d0ffca7219d094d967e6dec9be59af, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f0509fbd57a10054ca5b82ed39d5b899, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:

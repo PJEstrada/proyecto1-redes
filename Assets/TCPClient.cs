@@ -52,7 +52,7 @@ public class TCPClient{
 		String s = p.GetDataStream ();
 		byte[] message = GetBytes (s);
 		stream.Write (message, 0,message.Length);
-		
+		Debug.Log("TCP Client: Enviado mensaje!");
 		
 	}
 	public void closeConnection(){
@@ -63,16 +63,16 @@ public class TCPClient{
 	}
 	
 	public void receiveMessage(){
-		Debug.Log ("TCP: En handler del Cliente");
+		Debug.Log ("TCP CLIENT: En metodo lectura");
 		NetworkStream stream = client.GetStream ();
 		byte[] bb=new byte[1024];
 		stream.Read (bb,0,bb.Length);
 		string s = GetString (bb);
 		Paquete p = new Paquete(s);
-		Debug.Log ("Client: el xml tcp:" + p.GetDataStream ()); 
+		Debug.Log ("TCP Client: El XML recibido" + p.GetDataStream ()); 
 		Paquete.Identificador accion = p.identificadorPaquete;
 		if (accion == Paquete.Identificador.jugadorListo) {
-			GameController.controller.opponentReady=true;
+			GameController.controller.opponentReady = true;
 			
 		} else if (accion == Paquete.Identificador.moverAbajo) {
 			//mover el server abajo
@@ -91,13 +91,27 @@ public class TCPClient{
 			GameController.controller.ship1.rRight = true;
 			
 		} else if (accion == Paquete.Identificador.disparar) {
-			
+			GameController.controller.ship1.fireB = true;
 		} else if (accion == Paquete.Identificador.colision) {
 			
 		} else if (accion == Paquete.Identificador.accesoAutorizado) {
 			Debug.Log ("TCP: Ya me autorizaron :)");
 			GameController.controller.connected = true;
-		}
+		} else if (accion == Paquete.Identificador.jugadorGana) {
+			if (p.jugador == 1) {
+				GameController.controller.p1Wins = true;
+
+			} else if (p.jugador == 2) {
+				GameController.controller.p2Wins = true;
+
+			}
+
+		
+		} else if (accion == Paquete.Identificador.desconectar) {
+			GameController.controller.mm2 = true;
+			
+		} 
+
 		
 	}
 	/*-------------------------------------FIN AREA SERVER------------------------------------------------------*/

@@ -9,7 +9,7 @@ public class Ship : MonoBehaviour {
 	public GameObject bullet;
 	public int player;
 	public KeyCode moveUp,moveDown,moveLeft,moveRight,fireBtn;
-	public bool rLeft, rRight, rUp, rDown;
+	public bool rLeft, rRight, rUp, rDown,fireB;
 	
 	// Use this for initialization
 	void Start () {
@@ -18,6 +18,7 @@ public class Ship : MonoBehaviour {
 		rRight = false;
 		rUp = false;
 		rDown = false;
+		fireB = false;
 
 
 
@@ -53,39 +54,51 @@ public class Ship : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (GameController.controller.gameOn==true) {
-			if(player==1 && GameController.controller.isServer || player==2 && GameController.controller.isServer==false){
-				if(rLeft){
-					this.rotateLeft_2();
-					rLeft = false;
-				}
-				if(rRight){
-					this.rotateRight_2();
-					rRight = false;
-				}
-				if(rUp){
-					this.rotateFront_2();
-					rUp = false;
-				}
-				if(rDown){
-					this.rotateDown_2();
-					rDown = false;
-				}
+			//MoveShip();
+			if((this.player==1 && GameController.controller.isServer==true) || (this.player==2 && GameController.controller.isServer==false)){			
+				if (Input.GetKeyDown (moveLeft)) {
+					rotateLeft ();
+					
+				} else if (Input.GetKeyDown (moveDown)) {
+					rotateDown ();
+				} else if (Input.GetKeyDown (moveUp)) {
+					rotateFront ();
+				} else if (Input.GetKeyDown (moveRight)) {
+					rotateRight ();
+				} else if (Input.GetKeyDown (fireBtn)) {
+					fire ();
+				}	
 				
 			}
-			/*----------------------------*/
+			/*else{
+				syncedMovement();
+
+			}*/
+
+			if(rLeft){
+				this.rotateLeft_2();
+				rLeft = false;
+			}
+			else if(rRight){
+				this.rotateRight_2();
+				rRight = false;
+			}
+			else if(rUp){
+				this.rotateFront_2();
+				rUp = false;
+			}
+			else if(rDown){
+				this.rotateDown_2();
+				rDown = false;
+			}
+			else if(fireB){
+				this.fire_2();
+				fireB = false;
+			}
 			
-			if (Input.GetKeyDown (moveLeft)) {
-				rotateLeft ();
-				
-			} else if (Input.GetKeyDown (moveDown)) {
-				rotateDown ();
-			} else if (Input.GetKeyDown (moveUp)) {
-				rotateFront ();
-			} else if (Input.GetKeyDown (moveRight)) {
-				rotateRight ();
-			} else if (Input.GetKeyDown (fireBtn)) {
-				fire ();
-			}		
+
+			/*----------------------------*/
+	
 			
 			
 		}
@@ -93,7 +106,29 @@ public class Ship : MonoBehaviour {
 		
 		
 	}
+	public void syncedMovement(){
+		if (GameController.controller.isServer == true) {
+			GameController.controller.serverUDP.syncTime += Time.deltaTime;
+
+			gameObject.rigidbody2D.position = Vector3.Lerp(GameController.controller.serverUDP.syncStartPosition, GameController.controller.serverUDP.syncEndPosition
+			                                  , GameController.controller.serverUDP.syncTime / GameController.controller.serverUDP.syncDelay);		
+		
+		} 
+		else {
+			GameController.controller.clientUDP.syncTime += Time.deltaTime;
+
+			gameObject.rigidbody2D.position = Vector3.Lerp(GameController.controller.clientUDP.syncStartPosition, GameController.controller.clientUDP.syncEndPosition
+			                                  , GameController.controller.clientUDP.syncTime / GameController.controller.clientUDP.syncDelay);
+		}		
+
+	
+	}
+	public void correctPosition(){
+		
+	
+	}
 	void MoveShip(){
+		//sendPosition ();
 		if (GameController.controller.gameOn==true) {
 			if (facing.Equals("front")) {
 				Vector3 v1 = rigidbody2D.velocity;
@@ -267,6 +302,7 @@ public class Ship : MonoBehaviour {
 	}
 	
 	public void rotateRight_2(){
+
 		if (!facing.Equals("right") && !facing.Equals("left")) {
 			if(facing.Equals("front")){
 				
@@ -284,6 +320,7 @@ public class Ship : MonoBehaviour {
 	}
 	
 	public void rotateFront_2(){
+
 		if (!facing.Equals("front") && !facing.Equals("down")) {
 			if(facing.Equals("right")){
 				
@@ -319,9 +356,31 @@ public class Ship : MonoBehaviour {
 		GameObject barrel = getChildGameObject (gameObject, "Barrel");
 		GameObject go = (GameObject)Instantiate(bullet, barrel.transform.position, barrel.transform.rotation);
 		go.GetComponent<BulletObject> ().direction = facing;
+
 		
+
 		//Mandamos Mensaje (Decidir si antes de pintar o despues)
+		Paquete p = new Paquete ();
+		p.identificadorPaquete = Paquete.Identificador.disparar;
 		
+		if (GameController.controller.isServer) {
+			//es server
+			//escribir al cliente que 
+			GameController.controller.tcpServer.sendMessage(p);
+			
+		} else {
+			//es cliente
+			//escribir al server que roto
+			GameController.controller.tcpClient.sendMessage(p);
+		}
+
+	}
+
+	public void fire_2(){
+		GameObject barrel = getChildGameObject (gameObject, "Barrel");
+		GameObject go = (GameObject)Instantiate(bullet, barrel.transform.position, barrel.transform.rotation);
+		go.GetComponent<BulletObject> ().direction = facing;	
+	
 	}
 	public void stopMoving(){
 		Vector3 v1 = rigidbody2D.velocity;
@@ -333,24 +392,28 @@ public class Ship : MonoBehaviour {
 	//Choque de la nave
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		this.gameObject.GetComponent<SpriteRenderer> ().enabled = false;
+		if (GameController.controller.isServer == true) {
+			this.gameObject.GetComponent<SpriteRenderer> ().enabled = false;
+			
+			if (this.player == 1) {
+				GameController.controller.playerWins (2);
+			} else {
+				GameController.controller.playerWins (1);
+			}		
 		
-		if (this.player == 1) {
-			GameController.controller.playerWins (2);
-		} else {
-			GameController.controller.playerWins (1);
 		}
+
 	}
 	
 	
 	void OnTriggerStay2D(Collider2D other)
 	{
-		Debug.Log("Still colliding with trigger object " + other.name);
+		//Debug.Log("Still colliding with trigger object " + other.name);
 	}
 	
 	void OnTriggerExit2D(Collider2D other)
 	{
-		Debug.Log(gameObject.name + " and trigger object " + other.name + " are no longer colliding");
+		//Debug.Log(gameObject.name + " and trigger object " + other.name + " are no longer colliding");
 	}
 	
 	static public GameObject getChildGameObject(GameObject fromGameObject, string withName) {

@@ -1,11 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Ship.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\WelcomeScreen.cs">
     <Files>
-      <File FileName="Assets\Ship.cs" Line="22" Column="3" />
+      <File FileName="Assets\MainGame.cs" Line="37" Column="1" />
       <File FileName="Assets\TCPServer.cs" Line="1" Column="1" />
       <File FileName="Assets\TCPClient.cs" Line="1" Column="1" />
-      <File FileName="Assets\MainGame.cs" Line="1" Column="1" />
+      <File FileName="Assets\WelcomeScreen.cs" Line="23" Column="30" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
