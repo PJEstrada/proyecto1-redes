@@ -33,7 +33,7 @@ public class MainGame : MonoBehaviour {
 		GameController.controller.MainMenu ();
 	
 	}
-
+	
 	public void playAgain(){
 		GameController.controller.connected=false;
 		ready.GetComponent<Button> ().enabled = true;
