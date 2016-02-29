@@ -9,8 +9,9 @@ using System;
 
 public class TCPClient{
 	
-	TcpClient client;
+	public TcpClient client;
 	static string ip;
+	bool connect;
 	// Use this for initialization
 	void Start () {
 		
@@ -38,8 +39,8 @@ public class TCPClient{
 		Paquete msg = new Paquete ();
 		msg.identificadorPaquete = Paquete.Identificador.conectar;
 		sendMessage (msg);
-		
-		while (true) {
+		connect = true;
+		while (connect) {
 			receiveMessage();
 			
 		}
@@ -58,7 +59,7 @@ public class TCPClient{
 	public void CloseConnection(){
 		client.GetStream ().Close ();
 		client.Close ();
-		
+		connect = false;
 		
 	}
 	

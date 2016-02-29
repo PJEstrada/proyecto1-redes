@@ -88,7 +88,7 @@ public class GameController : MonoBehaviour {
 			GameController.controller.serverUDP.serverSocket.Close();
 			GameController.controller.tcpServer.sendMessage(p);
 			GameController.controller.tcpServer.CloseConnection();
-			
+			GameController.controller.tcpServer = null;
 		} 
 		else {
 			Paquete p = new Paquete();
@@ -96,7 +96,7 @@ public class GameController : MonoBehaviour {
 			GameController.controller.clientUDP.clientSocket.Close();
 			GameController.controller.tcpClient.sendMessage(p);
 			GameController.controller.tcpClient.CloseConnection();
-
+			GameController.controller.tcpClient = null;
 		
 		}
 
@@ -111,12 +111,13 @@ public class GameController : MonoBehaviour {
 
 			GameController.controller.serverUDP.serverSocket.Close();
 			GameController.controller.tcpServer.CloseConnection();
-			
+			GameController.controller.tcpServer = null;
 		} 
 		else {
 
 			GameController.controller.clientUDP.clientSocket.Close();
 			GameController.controller.tcpClient.CloseConnection();
+			GameController.controller.tcpClient = null;
 		}
 		Application.LoadLevel (0);
 	}

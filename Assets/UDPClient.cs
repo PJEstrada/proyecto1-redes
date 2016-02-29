@@ -57,6 +57,7 @@ public class UDPClient {
 		}
 	
 	}
+
 	public void sendMessage(Paquete p){
 		byte[] data	;
 		p.id = this.sendingPackagesCounter;
