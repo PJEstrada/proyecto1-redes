@@ -1,22 +1,22 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TCPServer.cs">
     <Files>
-      <File FileName="Assets\UDPClient.cs" Line="60" Column="2" />
+      <File FileName="Assets\UDPClient.cs" Line="60" Column="1" />
       <File FileName="Assets\UDPServer.cs" Line="1" Column="1" />
       <File FileName="Assets\Ship.cs" Line="1" Column="1" />
-      <File FileName="Assets\GameController.cs" Line="192" Column="29" />
-      <File FileName="Assets\TCPServer.cs" Line="57" Column="37" />
-      <File FileName="Assets\TCPClient.cs" Line="62" Column="19" />
-      <File FileName="Assets\WelcomeScreen.cs" Line="57" Column="29" />
-      <File FileName="Assets\Paquete.cs" Line="77" Column="1" />
+      <File FileName="Assets\GameController.cs" Line="1" Column="1" />
+      <File FileName="Assets\TCPServer.cs" Line="137" Column="1" />
+      <File FileName="Assets\TCPClient.cs" Line="26" Column="18" />
+      <File FileName="Assets\WelcomeScreen.cs" Line="70" Column="1" />
+      <File FileName="Assets\Paquete.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="C:\Users\pablo\Dropbox\Año 5 Semestre 1\Redes\Proyecto 1 -Redes\proyecto1-redes\Assets\TCPServer.cs" line="55" />
-      <Breakpoint file="C:\Users\pablo\Dropbox\Año 5 Semestre 1\Redes\Proyecto 1 -Redes\proyecto1-redes\Assets\TCPServer.cs" line="59" />
-      <Breakpoint file="C:\Users\pablo\Dropbox\Año 5 Semestre 1\Redes\Proyecto 1 -Redes\proyecto1-redes\Assets\TCPServer.cs" line="32" />
+      <Breakpoint file="C:\Users\pablo\Dropbox\Año 5 Semestre 1\Redes\Proyecto 1 -Redes\proyecto1-redes\Assets\TCPServer.cs" line="56" />
+      <Breakpoint file="C:\Users\pablo\Dropbox\Año 5 Semestre 1\Redes\Proyecto 1 -Redes\proyecto1-redes\Assets\TCPServer.cs" line="60" />
+      <Breakpoint file="C:\Users\pablo\Dropbox\Año 5 Semestre 1\Redes\Proyecto 1 -Redes\proyecto1-redes\Assets\TCPServer.cs" line="33" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

@@ -23,6 +23,7 @@ public class TCPClient{
 	}
 	
 	public TCPClient(){
+		connect = true;
 		client = new TcpClient ();
 		//client.Connect(IPAddress.Parse(WelcomeScreen.ipInput.text.ToString()), 30000);
 		Thread mThread = new Thread(new ThreadStart(ConnectAsClient));
@@ -39,7 +40,7 @@ public class TCPClient{
 		Paquete msg = new Paquete ();
 		msg.identificadorPaquete = Paquete.Identificador.conectar;
 		sendMessage (msg);
-		connect = true;
+
 		while (connect) {
 			receiveMessage();
 			
