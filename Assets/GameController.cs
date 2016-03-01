@@ -180,6 +180,7 @@ public class GameController : MonoBehaviour {
 		
 	}
 	void Update () {
+
 		if (GameController.controller.connected == true) {
 			Application.LoadLevel (1);
 			GameController.controller.connected=false;

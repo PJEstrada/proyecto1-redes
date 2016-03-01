@@ -178,18 +178,18 @@ public class UDPServer {
 				if(GameController.controller.player2.transform.position.x >= receivedData.x +60.0 || GameController.controller.player2.transform.position.y >= receivedData.y +60.0){
 					//Corregimos la posicion
 					Debug.Log ("UDP SERVER: DESFASE DE CLIENTE!! Corrigiendo...");
-
-
-				}
-
-					float newx = GameController.controller.ship1.transform.position.x;
-					float newy = GameController.controller.ship2.transform.position.y;
-
+					
+					float newx = GameController.controller.ship2.posx;
+					float newy = GameController.controller.ship2.posy;
+					
 					Paquete p = new Paquete();
 					p.identificadorPaquete = Paquete.Identificador.corregirPos;
 					p.x = newx;
 					p.y = newy;
 					sendMessage(p);
+
+				}
+
 
 
 				}
