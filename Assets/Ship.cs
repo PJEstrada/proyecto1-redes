@@ -58,7 +58,7 @@ public class Ship : MonoBehaviour {
 		posx = transform.position.x;
 		posy = transform.position.y;
 		if (GameController.controller.gameOn == true) {
-			MoveShip();
+			//MoveShip();
 			if ((this.player == 1 && GameController.controller.isServer == true) || (this.player == 2 && GameController.controller.isServer == false)) {			
 				if (Input.GetKeyDown (moveLeft)) {
 					rotateLeft ();
@@ -166,7 +166,7 @@ public class Ship : MonoBehaviour {
 				rigidbody2D.velocity = v;
 			}
 			sendPosition ();
-			Invoke("MoveShip",GameController.controller.timeBetweenSpawn);		
+			Invoke("MoveShip",timeBetweenMove);		
 			
 			
 		}

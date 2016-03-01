@@ -62,15 +62,15 @@ public class TCPServer  {
 		while (connect) {
 			NetworkStream stream = mClient.GetStream ();
 			byte[] message = new byte[1024];
-			Debug.Log ("TCP Server: Esperando Msj...");
+			//Debug.Log ("TCP Server: Esperando Msj...");
 			stream.Read (message, 0, message.Length);
-			Debug.Log ("TCP Server: Recibido nuevo Mensaje");
+			//Debug.Log ("TCP Server: Recibido nuevo Mensaje");
 			Paquete receivedData = new Paquete (GetString (message));
-			Debug.Log ("TCP Server: XML recibido: " + receivedData.GetDataStream ()); 
+			//Debug.Log ("TCP Server: XML recibido: " + receivedData.GetDataStream ()); 
 			Paquete.Identificador accion = receivedData.identificadorPaquete;
 			
 			if (accion == Paquete.Identificador.conectar) {
-				Debug.Log("TCP: Ya me conecte");
+				//Debug.Log("TCP: Ya me conecte");
 				Paquete p = new Paquete();
 				p.identificadorPaquete = Paquete.Identificador.accesoAutorizado;
 				sendMessage(p);
@@ -83,28 +83,28 @@ public class TCPServer  {
 
 				
 			} else if (accion == Paquete.Identificador.moverAbajo) {
-				Debug.Log ("TCP Server: Recibi mover abajo");
+				//Debug.Log ("TCP Server: Recibi mover abajo");
 				//mover abajo el cliente
 				GameController.controller.ship2.rDown = true;
 
 			} else if (accion == Paquete.Identificador.moverArriba) {
-				Debug.Log ("TCP Server: Recibi mover arriba");
+				//Debug.Log ("TCP Server: Recibi mover arriba");
 				//mover arriba el cliente
 				GameController.controller.ship2.rUp = true;
 				
 			} else if (accion == Paquete.Identificador.moverIzquierda) {
 				//mover izquierda el cliente
-				Debug.Log ("TCP Server: Recibi mover izquierda");
+				//Debug.Log ("TCP Server: Recibi mover izquierda");
 				GameController.controller.ship2.rLeft = true;
 				
 			} else if (accion == Paquete.Identificador.moverDerecha) {
 				//mover derecha cliente
-				Debug.Log ("TCP Server: Recibi mover derecha");
+				//Debug.Log ("TCP Server: Recibi mover derecha");
 				GameController.controller.ship2.rRight = true;
 				
 				
 			} else if (accion == Paquete.Identificador.disparar) {
-				Debug.Log ("TCP Server: Disparar");
+				//Debug.Log ("TCP Server: Disparar");
 				GameController.controller.ship2.fireB=true;
 				
 				

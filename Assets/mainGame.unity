@@ -457,7 +457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   facing: 
-  timeBetweenMove: .5
+  timeBetweenMove: .0799999982
   speed: 150
   bullet: {fileID: 193798, guid: d3cbf0107e36a3540bcdd796c8e6ed99, type: 2}
   player: 2
@@ -471,6 +471,11 @@ MonoBehaviour:
   rUp: 0
   rDown: 0
   fireB: 0
+  posx: 0
+  posy: 0
+  newx: 0
+  newy: 0
+  setPos: 0
 --- !u!61 &729120915
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1435,7 +1440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   facing: 
-  timeBetweenMove: .5
+  timeBetweenMove: .0799999982
   speed: 150
   bullet: {fileID: 193798, guid: d3cbf0107e36a3540bcdd796c8e6ed99, type: 2}
   player: 1
@@ -1449,6 +1454,11 @@ MonoBehaviour:
   rUp: 0
   rDown: 0
   fireB: 0
+  posx: 0
+  posy: 0
+  newx: 0
+  newy: 0
+  setPos: 0
 --- !u!61 &1599723476
 BoxCollider2D:
   m_ObjectHideFlags: 0

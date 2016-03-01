@@ -20,7 +20,9 @@ public class WelcomeScreen : MonoBehaviour {
 	void Start () {
 		ipInput = GameObject.Find ("InputField").GetComponent<InputField> ();
 		imageNave2 = GameObject.Find ("panelNave2").GetComponent<Image> ();
-		imageNave2.enabled = false;
+		imageNave2.enabled = true;
+		imageNave = GameObject.Find ("panelNave").GetComponent<Image> ();
+		imageNave.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -31,15 +33,15 @@ public class WelcomeScreen : MonoBehaviour {
 	public void drawShip(){
 		imageNave = GameObject.Find ("panelNave").GetComponent<Image> ();
 		imageNave2 = GameObject.Find ("panelNave2").GetComponent<Image> ();
-		Debug.Log ("hola que hace");
+
 		if (checkbox.isOn) {
-			Debug.Log ("hola que hace 1");
-			imageNave.enabled = true;
-			imageNave2.enabled = false;
-		} else {
-			Debug.Log ("hola que hace 2");
+
 			imageNave.enabled = false;
 			imageNave2.enabled = true;
+		} else {
+
+			imageNave.enabled = true;
+			imageNave2.enabled = false;
 		}
 	}
 
