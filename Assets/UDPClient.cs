@@ -36,7 +36,7 @@ public class UDPClient {
 			IPEndPoint server = new IPEndPoint (ipServer, 30001);
 			
 			epServer = (EndPoint)server;
-			Debug.Log("Enviando data de inicio de conexion: ");
+			//Debug.Log("Enviando data de inicio de conexion: ");
 			//string  data = sendData.GetDataStream();
 			//byte[] dataBytes = GetBytes (data);
 			//Enviar solicitud de conexion al servidor
@@ -70,7 +70,7 @@ public class UDPClient {
 
 	private void SendData(IAsyncResult ar)
 	{
-		Debug.Log("UDP Client: Enviando data -Counter Send = "+this.sendingPackagesCounter);
+		//Debug.Log("UDP Client: Enviando data -Counter Send = "+this.sendingPackagesCounter);
 		try
 		{
 			clientSocket.EndSend(ar);
@@ -79,23 +79,23 @@ public class UDPClient {
 		}
 		catch (Exception ex)
 		{
-			Debug.Log("Send Data: " + ex.Message+ "UDP Client");
+			//Debug.Log("Send Data: " + ex.Message+ "UDP Client");
 		}
 	}
 	private void ReceiveData(IAsyncResult ar)
 	{
 		try
 		{
-			Debug.Log("UDP Client: Recibiendo data : ");
+			//Debug.Log("UDP Client: Recibiendo data : ");
 
 			// Recibimos toda la data
 			this.clientSocket.EndReceive(ar);
 			// Inicializamos un paquete para almacenar la data 
 			Paquete receivedData = new Paquete(GetString(this.dataStream));
-			Debug.Log("UDP Client: Received data num : "+receivedData.id);
-			Debug.Log ("UDP Client: Client Counter: "+this.entrantPackagesCounter);
+			//Debug.Log("UDP Client: Received data num : "+receivedData.id);
+			//Debug.Log ("UDP Client: Client Counter: "+this.entrantPackagesCounter);
 			if(receivedData.id<this.entrantPackagesCounter){
-				Debug.Log("UDP Client: Paquete Descartado : ");
+				//Debug.Log("UDP Client: Paquete Descartado : ");
 				return; //Descartamos el paquete
 				
 			}
@@ -115,9 +115,9 @@ public class UDPClient {
 
 
 
-				if(GameController.controller.player1.transform.position.x >= receivedData.x +60.0 || GameController.controller.player1.transform.position.y >= receivedData.y +60.0){
+				if(GameController.controller.ship1.posx >= receivedData.x +60.0 || GameController.controller.ship1.posy >= receivedData.y +60.0){
 					//Corregimos la posicion
-					Debug.Log ("UDP CLIENT: DESFASE DE SERVER!! Corrigiendo...");
+					//Debug.Log ("UDP CLIENT: DESFASE DE SERVER!! Corrigiendo...");
 					float newx = receivedData.x;
 					float newy = receivedData.y;
 					GameController.controller.ship1.newx  = newx;
@@ -149,7 +149,7 @@ public class UDPClient {
 			}
 			else if (receivedData.identificadorPaquete == Paquete.Identificador.corregirPos){
 				//Corregimos la posicion
-				Debug.Log ("UDP CLIENT: Recibi correccion de pos del server!! Corrigiendo...");
+				//Debug.Log ("UDP CLIENT: Recibi correccion de pos del server!! Corrigiendo...");
 				float newx = receivedData.x;
 				float newy = receivedData.y;
 			}
@@ -168,7 +168,7 @@ public class UDPClient {
 		}
 		catch (Exception ex)
 		{
-			Debug.LogException(ex);
+			//Debug.LogException(ex);
 
 			throw ex;
 		}

@@ -67,7 +67,7 @@ public class UDPServer {
 		}
 		catch (Exception ex)
 		{
-			Debug.Log("Error al cargar servidor: " + ex.Message+ " ---UDP ");
+			//Debug.Log("Error al cargar servidor: " + ex.Message+ " ---UDP ");
 		}
 	}
 
@@ -92,13 +92,13 @@ public class UDPServer {
 	{
 		try
 		{
-			Debug.Log("UDP Server: Enviando data : ");
+			//Debug.Log("UDP Server: Enviando data : ");
 			serverSocket.EndSend(asyncResult);
 
 		}
 		catch (Exception ex)
 		{
-			Debug.Log("Error al enviar data: " + ex.Message+ " ---UDP Server");
+			//Debug.Log("Error al enviar data: " + ex.Message+ " ---UDP Server");
 		}
 	}
 
@@ -107,17 +107,17 @@ public class UDPServer {
 	{
 		try
 		{
-			Debug.Log("UDP Server: Recibiendo data : ");
+			//Debug.Log("UDP Server: Recibiendo data : ");
 			byte[] data	;
 			// Paquete para almacenar la data recibida
 			Paquete receivedData = new Paquete(GetString(this.dataStream));
 			receivedData.GetDataStream();
 			//Verificamos que el paquete venga en el ordern correcto.
 
-			Debug.Log("UDP Server: Received data num : "+receivedData.id);
-			Debug.Log ("UDP Server: Server Counter: "+this.entrantPackagesCounter);
+			//Debug.Log("UDP Server: Received data num : "+receivedData.id);
+			//Debug.Log ("UDP Server: Server Counter: "+this.entrantPackagesCounter);
 			if(receivedData.id<this.entrantPackagesCounter){
-				Debug.Log("UDP Server: Paquete Descartado : ");
+				//Debug.Log("UDP Server: Paquete Descartado : ");
 				return; //Descartamos el paquete
 
 			}
@@ -154,12 +154,12 @@ public class UDPServer {
 				/*Se envia el paquete a todos los clientes*/
 				/*foreach (Cliente client in this.listaClientes)
 				{
-					Debug.Log("Enviando a cliente..");
+					//Debug.Log("Enviando a cliente..");
 				
 
 						// Enviar a todos los clientes
 						serverSocket.BeginSendTo(data, 0, data.Length, SocketFlags.None, client.endPoint, new AsyncCallback(this.enviarData), client.endPoint);
-						Debug.Log("Envio Exitoso.");
+						//Debug.Log("Envio Exitoso.");
 
 				}*/
 
@@ -175,9 +175,9 @@ public class UDPServer {
 				//Verificando que la nave del cliente se encuentre en una posicion correcta
 				bool correctPosition=false;
 				//X ->   ,  Y -> 25
-				if(GameController.controller.player2.transform.position.x >= receivedData.x +60.0 || GameController.controller.player2.transform.position.y >= receivedData.y +60.0){
+				if(GameController.controller.ship2.posx >= receivedData.x +60.0 || GameController.controller.ship2.posy >= receivedData.y +60.0){
 					//Corregimos la posicion
-					Debug.Log ("UDP SERVER: DESFASE DE CLIENTE!! Corrigiendo...");
+					//Debug.Log ("UDP SERVER: DESFASE DE CLIENTE!! Corrigiendo...");
 					
 					float newx = GameController.controller.ship2.posx;
 					float newy = GameController.controller.ship2.posy;
@@ -192,7 +192,7 @@ public class UDPServer {
 
 
 
-				}
+			}
 				/*
 
 				else{
@@ -238,7 +238,7 @@ public class UDPServer {
 
 	private void UpdateStatus(string status)
 	{
-		Debug.Log( status + Environment.NewLine);
+		//Debug.Log( status + Environment.NewLine);
 	}
 
 
