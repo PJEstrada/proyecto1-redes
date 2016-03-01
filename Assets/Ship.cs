@@ -10,7 +10,9 @@ public class Ship : MonoBehaviour {
 	public int player;
 	public KeyCode moveUp,moveDown,moveLeft,moveRight,fireBtn;
 	public bool rLeft, rRight, rUp, rDown,fireB;
-	
+	public float posx,posy;
+	public float newx,newy;
+	public bool setPos;
 	// Use this for initialization
 	void Start () {
 
@@ -53,8 +55,10 @@ public class Ship : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
+		posx = transform.position.x;
+		posy = transform.position.y;
 		if (GameController.controller.gameOn == true) {
-			//MoveShip();
+			MoveShip();
 			if ((this.player == 1 && GameController.controller.isServer == true) || (this.player == 2 && GameController.controller.isServer == false)) {			
 				if (Input.GetKeyDown (moveLeft)) {
 					rotateLeft ();
@@ -91,6 +95,11 @@ public class Ship : MonoBehaviour {
 				this.fire_2 ();
 				fireB = false;
 			}
+			else if(setPos == true){
+			
+				transform.position = new Vector3(newx,newy,0);
+				setPos = false;
+			}
 			
 
 			/*----------------------------*/
@@ -125,7 +134,7 @@ public class Ship : MonoBehaviour {
 	}
 	void MoveShip(){
 
-		sendPosition ();
+
 		if (GameController.controller.gameOn==true) {
 			if (facing.Equals("front")) {
 				Vector3 v1 = rigidbody2D.velocity;
@@ -156,7 +165,7 @@ public class Ship : MonoBehaviour {
 				v.y = -speed;
 				rigidbody2D.velocity = v;
 			}
-			
+			sendPosition ();
 			Invoke("MoveShip",GameController.controller.timeBetweenSpawn);		
 			
 			

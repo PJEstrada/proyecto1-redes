@@ -120,6 +120,9 @@ public class UDPClient {
 					Debug.Log ("UDP CLIENT: DESFASE DE SERVER!! Corrigiendo...");
 					float newx = receivedData.x;
 					float newy = receivedData.y;
+					GameController.controller.ship1.newx  = newx;
+					GameController.controller.ship1.newy = newy;
+					GameController.controller.ship1.setPos = true;
 					GameController.controller.ship1.transform.position = new Vector3(newx,newy,0);
 					
 					
